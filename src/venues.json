@@ -1,0 +1,27 @@
+[
+    {
+      "id": "southwarkpark1",
+      "name": "Southwark Park",
+      "slug": "SouthwarkPark",
+      "provider": "lta",
+      "area": "Southwark",
+      "courts": 4
+    },
+    {
+      "id": "ruskinpark1",
+      "name": "Ruskin Park",
+      "slug": "RuskinPark",
+      "provider": "lta",
+      "area": "Lambeth",
+      "courts": 4
+    },
+    {
+      "id": "brunswickpark1",
+      "name": "Brunswick Park (Southwark)",
+      "slug": "BrunswickPark",
+      "provider": "lta",
+      "area": "Southwark",
+      "courts": 2
+    }
+  ]
+  

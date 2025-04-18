@@ -139,29 +139,6 @@ const mergeTimeSlots = (slots: Slot[]): Slot[] => {
   return merged;
 };
 
-const calculateAvailableSlots = (mergedSlots: Slot[], venueOpen: number, venueClose: number): Slot[] => {  
-  const availableSlots: Slot[] = [];
-  let lastEnd = venueOpen;
-  let lastCost = 0;
-
-  mergedSlots.forEach(slot => {
-    if (slot.start > lastEnd) {
-      availableSlots.push({
-        start: lastEnd,
-        end: slot.start,
-        cost: slot.cost
-      });
-    }
-    lastEnd = Math.max(lastEnd, slot.end);
-    lastCost = slot.cost;
-  });
-
-  // Add remaining time after last unavailable slot
-  if (lastEnd < venueClose) {
-    availableSlots.push({ start: lastEnd, end: venueClose, cost: lastCost });
-  };
-};
-
 /*  
 * Example output of LTA API call
 {

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 
 export default function RootLayout({
@@ -16,10 +16,10 @@ export default function RootLayout({
             <div className="flex justify-between items-center">
               <div className="text-lg font-bold">London Tennis Court Booker</div>
               <div className="space-x-4">
-                <a href="/" className="hover:text-gray-300">Home</a>
-                <a href="/dashboard" className="hover:text-gray-300">Dashboard</a>
-                <a href="/about" className="hover:text-gray-300">About</a>
-                <a href="/contact" className="hover:text-gray-300">Contact</a>
+                <Link href="/" className="hover:text-gray-300">Home</Link>
+                <Link href="/dashboard" className="hover:text-gray-300">Dashboard</Link>
+                <Link href="/about" className="hover:text-gray-300">About</Link>
+                <Link href="/contact" className="hover:text-gray-300">Contact</Link>
               </div>
             </div>
           </div>

@@ -1,5 +1,3 @@
-import Image from "next/image";
-import CourtForm from "@/components/CourtForm";
 import CourtBooking from "@/components/CourtBooking";
 
 export default function Home() {

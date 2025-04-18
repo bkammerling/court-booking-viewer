@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { Venue } from '@/types';
 import venuesJson from '@/venues.json';
-import { getVenueSessionsUrl } from '@/utils';
 
 /* 
  * Renders a court selection form from our venues.json file

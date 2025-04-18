@@ -64,11 +64,11 @@ const getAvailableSessions = (resourceData: any, formattedDate: string) => {
 
   const allCourtsAvailability: CourtAvailability[] = [];
 
-  resourceData.Resources.forEach(court => {
+  resourceData.Resources.forEach((court: any) => {
     // For this court, collect its available sessions
-    const courtAvailable = court.Days.flatMap(day => 
-      day.Sessions.filter(session => session.Capacity >= 1 && session.StartTime >= currentTimeInMinutes)
-      .map(session => ({
+    const courtAvailable = court.Days.flatMap((day: any) => 
+      day.Sessions.filter((session: any) => session.Capacity >= 1 && session.StartTime >= currentTimeInMinutes)
+      .map((session: any) => ({
         start: session.StartTime,
         end: session.EndTime,
         cost: session.Cost

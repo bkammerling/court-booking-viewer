@@ -1,4 +1,4 @@
-import { getVenueSessionsUrl } from '@/utils';
+import { getVenueSessionsUrl, getVenueBookingUrl } from '@/utils';
 import { Slot, CourtAvailability } from '@/types';
 
 export async function GET(request: Request) {
@@ -33,8 +33,10 @@ export async function GET(request: Request) {
       );
 
       const sessionData = resourceDataArray.map((resourceData) => { 
-        const venueSessions = getAvailableSessions(resourceData.sessions);
-        return { venue: resourceData.venueSlug, venueSessions };
+        if(!resourceData.venueSlug || resourceData.error) return;
+        const venueSessions = getAvailableSessions(resourceData.sessions, formattedDate);
+        const bookingUrl = getVenueBookingUrl(resourceData.venueSlug, provider, formattedDate);
+        return { venue: resourceData.venueSlug, venueSessions, bookingUrl };
       })
       
 
@@ -55,10 +57,10 @@ export async function GET(request: Request) {
 
 // Function to get available sessions for a single venue
 
-const getAvailableSessions = (resourceData: any) => {
-  const venueOpen = resourceData.EarliestStartTime; // 420 = 7:00 AM
-  const venueClose = resourceData.LatestEndTime;    // 1320 = 10:00 PM
-  const currentTimeInMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+const getAvailableSessions = (resourceData: any, formattedDate: string) => {
+  // check if formatted date is today
+  const isToday = new Date(formattedDate).toDateString() === new Date().toDateString();
+  const currentTimeInMinutes = isToday ? new Date().getHours() * 60 + new Date().getMinutes() : 500;
 
   const allCourtsAvailability: CourtAvailability[] = [];
 
@@ -79,9 +81,14 @@ const getAvailableSessions = (resourceData: any) => {
     });
   });
 
+
   const allAvailableSlots = allCourtsAvailability.flatMap(
     court => court.availableSlots
   );
+
+  if (allAvailableSlots.length === 0) {
+    return [];
+  }
   
   // Merge overlapping/adjacent slots across courts
   const mergedAvailableSlots = mergeTimeSlots(allAvailableSlots);

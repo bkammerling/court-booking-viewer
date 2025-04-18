@@ -24,8 +24,9 @@ export default function RootLayout({
             </div>
           </div>
         </nav>
-        
-        {children}
+        <main className="px-4">
+          {children}
+        </main>
       </body>
     </html>
   );

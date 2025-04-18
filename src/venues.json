@@ -16,12 +16,84 @@
       "courts": 4
     },
     {
+      "id": "kenningtonpark1",
+      "name": "Kennington Park",
+      "slug": "KenningtonPark",
+      "provider": "lta",
+      "area": "Lambeth",
+      "courts": 5
+    },
+    {
+      "id": "vauxhallpark1",
+      "name": "Vauxhall Park",
+      "slug": "VauxhallPark",
+      "provider": "lta",
+      "area": "Lambeth",
+      "courts": 2
+    },
+    {
+      "id": "claphamcommon1",
+      "name": "Clapham Common",
+      "slug": "ClaphamCommon",
+      "provider": "lta",
+      "area": "Lambeth",
+      "courts": 8
+    },
+    {
       "id": "brunswickpark1",
       "name": "Brunswick Park (Southwark)",
       "slug": "BrunswickPark",
       "provider": "lta",
       "area": "Southwark",
       "courts": 2
+    },
+    {
+      "id": "burgesspark1",
+      "name": "Burgess Park",
+      "slug": "BurgessParkSouthwark",
+      "provider": "lta",
+      "area": "Southwark",
+      "courts": 2
+    },
+    {
+      "id": "dulwichpark1",
+      "name": "Dulwich Park",
+      "slug": "DulwichPark",
+      "provider": "lta",
+      "area": "Southwark",
+      "courts": 4
+    },
+    {
+      "id": "tannerstpark1",
+      "name": "Tanner St Park",
+      "slug": "TannerStPark",
+      "provider": "lta",
+      "area": "Southwark",
+      "courts": 4
+    },
+    {
+      "id": "clissoldpark1",
+      "name": "Clissold Park",
+      "slug": "ClissoldParkHackney",
+      "provider": "lta",
+      "area": "Hackney",
+      "courts": 7
+    },
+    {
+      "id": "londonfields1",
+      "name": "London Fields",
+      "slug": "LondonFieldsPark",
+      "provider": "lta",
+      "area": "Hackney",
+      "courts": 2
+    },
+    {
+      "id": "millfieldspark1",
+      "name": "Millfields Park",
+      "slug": "MillfieldsParkMiddlesex",
+      "provider": "lta",
+      "area": "Hackney",
+      "courts": 4
     }
   ]
   

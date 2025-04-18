@@ -86,6 +86,7 @@ const CourtForm = ({ onSearch }: { onSearch: (selectedVenues: string[], selected
                             id={`venue-${venue.id}`}
                             checked={!!selectedVenues[venue.slug]}
                             onChange={() => handleCheckboxChange(venue.slug)}
+                            className="accent-yellow-500"
                         />
                         <label htmlFor={`venue-${venue.id}`}>{venue.name}</label>
                         </div>
@@ -95,7 +96,7 @@ const CourtForm = ({ onSearch }: { onSearch: (selectedVenues: string[], selected
                 ))}
 
                 <button 
-                    className="mt-4 px-5 py-2 bg-yellow-300 hover:bg-yellow-400 text-black cursor-pointer transition rounded flex items-center gap-3"
+                    className="mt-4 px-5 py-2 bg-yellow-500 hover:bg-yellow-400 text-black cursor-pointer transition rounded flex items-center gap-3"
                     onClick={() => handleSearchClick()}
                 >
                     <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">

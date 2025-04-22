@@ -14,12 +14,49 @@ const SearchResults = ({ data }: { data: any }) => {
   }
 
   return (
+    <ResultsGrid data={data} />
+  );
+};
+
+const ResultsGrid = ({ data }: { data: any }) => {
+  return (
+    <div className="overflow-x-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 ">
+      { data.map((venueData: any) => {
+        const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue };
+        // Check if venueData.venueSessions is empty
+        if (!venueData.venueSessions || venueData.venueSessions.length === 0) return;
+        return (
+          <div key={venueData.venue} className="border border-gray-300 mb-4">
+            <img src={`/courts/${venueData.venue}.jpg`} alt={venue.name} className="w-full h-32 object-cover" />
+            <div className="p-4">
+              <h3 className="text-lg font-bold mb-2">
+                <a href={venueData.bookingUrl} target="_blank" className="text-yellow-500 hover:underline">
+                  { venue.name }
+                </a>
+              </h3>
+              <div>
+                {venueData.venueSessions.map((session: any, index: number) => (
+                  <div key={index}>
+                    {session.start} - {session.end}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+const ResultsTable = ({ data }: { data: any }) => {
+  return (
     <div className="overflow-x-auto">
         <table className="table-auto border-collapse border border-gray-300 w-full">
             <thead>
                 <tr className="bg-gray-100 dark:bg-gray-800">
                     <th className="border border-gray-300 px-4 py-2 text-left">Venue Name</th>
-                    <th className="border border-gray-300 px-4 py-2 text-left">Free Sessions</th>
+                    <th className="border border-gray-300 px-4 py-2 text-left">Available Sessions</th>
                     <th className="border border-gray-300 px-4 py-2 text-left">Cost</th>
                 </tr>
             </thead>
@@ -54,6 +91,7 @@ const SearchResults = ({ data }: { data: any }) => {
         </table>
     </div>
   );
-};
+
+}
 
 export default SearchResults;

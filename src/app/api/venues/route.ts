@@ -60,11 +60,13 @@ export async function GET(request: Request) {
 const getAvailableSessions = (resourceData: any, formattedDate: string) => {
   // check if formatted date is today
   const isToday = new Date(formattedDate).toDateString() === new Date().toDateString();
-  const currentTimeInMinutes = isToday ? new Date().getHours() * 60 + new Date().getMinutes() : 500;
+  const currentTimeInMinutes = isToday ? new Date().getHours() * 60 + new Date().getMinutes() : 0;
 
   const allCourtsAvailability: CourtAvailability[] = [];
 
   resourceData.Resources.forEach((court: any) => {
+    // Only consider courts that are standard size
+    if (court.Size !== 0) return;
     // For this court, collect its available sessions
     const courtAvailable = court.Days.flatMap((day: any) => 
       day.Sessions.filter((session: any) => session.Capacity >= 1 && session.StartTime >= currentTimeInMinutes)
@@ -75,11 +77,14 @@ const getAvailableSessions = (resourceData: any, formattedDate: string) => {
       }))
     );
 
+    console.log(courtAvailable);
+
     allCourtsAvailability.push({
       courtName: court.Name,
       availableSlots: courtAvailable
     });
   });
+
 
 
   const allAvailableSlots = allCourtsAvailability.flatMap(

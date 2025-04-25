@@ -16,5 +16,15 @@ export interface Slot {
 export interface CourtAvailability {
     courtName: string;
     availableSlots: Slot[];
-  }
-  
+}
+
+export interface Option {
+    readonly value: string;
+    readonly label: string;
+    readonly isDisabled?: boolean;
+}
+
+export interface GroupedOption {
+    readonly label: string;
+    readonly options: Option[];
+}

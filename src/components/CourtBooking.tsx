@@ -5,8 +5,10 @@ import SearchResults from './SearchResults';
 
 const CourtBooking = () => {
     const [searchResults, setSearchResults] = useState(null);
+    const [isFetching, setIsFetching] = useState(false);
 
     const handleSearch = async (selectedVenues: string[], selectedDate: string) => {
+        setIsFetching(true);
         const params = new URLSearchParams({
             slugs: selectedVenues.join(','),
             date: selectedDate,
@@ -21,12 +23,13 @@ const CourtBooking = () => {
         } catch (error) {
             console.error('Error fetching venue data:', error);
         }
+        setIsFetching(false);
     };
 
     return (
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-            <CourtForm onSearch={handleSearch} />
+          <div className="">
+            <CourtForm onSearch={handleSearch} isFetching={isFetching} />
             <SearchResults data={searchResults} />
           </div>
         </div>

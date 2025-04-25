@@ -1,8 +1,12 @@
 'use client';
+import { useState } from 'react';
 import venues from '@/venues.json';
 import { Venue } from '@/types';
 
 const SearchResults = ({ data }: { data: any }) => {
+  const [isGridView, setIsGridView] = useState(true);
+
+  // Check if data is null or undefined
   if (!data) {
       return <p>No results to display.</p>;
   }
@@ -14,20 +18,47 @@ const SearchResults = ({ data }: { data: any }) => {
   }
 
   return (
-    <ResultsGrid data={data} />
+    // Button group to toggle between grid and table view
+    <>
+    <div className="flex justify-end mb-4">
+      <button
+        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l"
+        onClick={() => setIsGridView(true)}
+      >
+        Grid View
+      </button>
+      <button 
+        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r"
+        onClick={() => setIsGridView(false)}
+      >
+        Table View
+      </button>
+    </div>
+    { isGridView ? (
+      <ResultsGrid data={data} />
+    ) : (
+      <ResultsTable data={data} />
+    )}
+    </>
   );
 };
 
 const ResultsGrid = ({ data }: { data: any }) => {
+  const fallbackImage = "/courts/random-tennis-court.webp";
   return (
-    <div className="overflow-x-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 ">
+    <div className="overflow-x-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
       { data.map((venueData: any) => {
         const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue };
         // Check if venueData.venueSessions is empty
         if (!venueData.venueSessions || venueData.venueSessions.length === 0) return;
         return (
           <div key={venueData.venue} className="border border-gray-300 mb-4">
-            <img src={`/courts/${venueData.venue}.jpg`} alt={venue.name} className="w-full h-32 object-cover" />
+            <img 
+              src={`/courts/${venueData.venue}.jpg`} 
+              alt={venue.name} 
+              className="w-full h-32 object-cover" 
+              onError={(e) => (e.currentTarget.src = fallbackImage)}
+            />
             <div className="p-4">
               <h3 className="text-lg font-bold mb-2">
                 <a href={venueData.bookingUrl} target="_blank" className="text-yellow-500 hover:underline">

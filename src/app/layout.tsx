@@ -22,7 +22,7 @@ export default function RootLayout({
             </div>
           </div>
         </nav>
-        <main className="px-4">
+        <main className="px-4 pb-15">
           {children}
         </main>
       </body>

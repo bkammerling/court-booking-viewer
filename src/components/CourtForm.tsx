@@ -51,7 +51,7 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
                     type="date"
                     id="date"
                     value={selectedDate}
-                    className="border border-gray-300 rounded px-4 py-3 mt-2 text-lg block bg-white dark:bg-gray-700 text-black dark:text-white w-full"
+                    className="border border-gray-300 rounded px-4 py-3 mt-2 block bg-white dark:bg-gray-700 text-black dark:text-white w-full appearance-none"
                     onChange={(e) => {
                         setSelectedDate(e.target.value);
                     }}
@@ -60,43 +60,102 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
             
             <div className="mb-3 md:mb-0 grow">
                 <label htmlFor="courtselect" className="mr-2 font-semibold">Courts</label>
+                { /* <CourtSelectorModal groupedVenues={groupedVenues} selectedVenues={selectedVenues} setSelectedVenues={setSelectedVenues} /> */}
                 <Select                    
                     options={groupedVenues}
                     id="courtselect"
                     isMulti
                     closeMenuOnSelect={false}
                     blurInputOnSelect={false}
+                    isSearchable={false}
                     onChange={(option) => onSelectChange(option as any)}
                     classNames={{
-                        control: () => 'px-2 py-1 mt-2 text-lg',
+                        control: () => 'px-2 py-015 mt-2',
                     }}
                 />
             </div>
-
-            <button 
-                className={`mt-5 px-10 py-3 bg-yellow-500 hover:bg-yellow-400 text-black transition rounded flex items-center justify-start gap-4 w-full md:w-auto ${isFetching ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-                onClick={() => handleSearchClick()}
-                disabled={isFetching}
-            >
-                <svg 
-                    width="19" 
-                    height="19" 
-                    viewBox="0 0 19 19" 
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={isFetching ? 'animate-spin' : ''}
+            
+            <div className={`align-self-end`}>
+                <button 
+                    className={`mt-5 px-10 py-3 bg-yellow-500 hover:bg-yellow-400 text-black transition rounded flex items-center justify-start gap-4 w-full md:w-auto ${isFetching ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                    onClick={() => handleSearchClick()}
+                    disabled={isFetching}
                 >
-                    <path d="M3.03094 2.56443C0.524809 5.07057 0.233398 7.51842 0.233398 7.51842C0.233398 7.51842 3.91895 8.38793 6.50386 5.50256C8.7426 3.00359 7.86837 0.116577 7.86837 0.116577C7.86837 0.116577 4.83769 0.757682 3.03094 2.56443Z" fill="black"/>
-                    <path d="M16.0794 16.3837C18.5855 13.8776 18.877 11.4297 18.877 11.4297C18.877 11.4297 15.1914 10.5602 12.6065 13.4456C10.3678 15.9445 11.242 18.8315 11.242 18.8315C11.242 18.8315 14.2727 18.1904 16.0794 16.3837Z" fill="black"/>
-                    <path d="M3.03081 16.6104C0.559645 14.6988 -0.0192912 10.8016 0.0584184 9.20859C1.55433 9.38344 5.10566 8.98712 7.3437 6.93558C9.58174 4.88405 9.7527 1.53476 9.55842 0C10.9572 0.194274 13.8363 0.594479 16.0278 2.50613C18.2192 4.41779 19.039 8.27607 18.9419 9.73313C17.6208 9.46115 14.3259 9.5 11.7149 11.8313C9.10382 14.1626 9.1893 17.5818 9.55842 19C8.37335 18.9223 5.50198 18.5221 3.03081 16.6104Z" fill="black"/>
-                </svg>
+                    <svg 
+                        width="19" 
+                        height="19" 
+                        viewBox="0 0 19 19" 
+                        fill="none" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={isFetching ? 'animate-spin' : ''}
+                    >
+                        <path d="M3.03094 2.56443C0.524809 5.07057 0.233398 7.51842 0.233398 7.51842C0.233398 7.51842 3.91895 8.38793 6.50386 5.50256C8.7426 3.00359 7.86837 0.116577 7.86837 0.116577C7.86837 0.116577 4.83769 0.757682 3.03094 2.56443Z" fill="black"/>
+                        <path d="M16.0794 16.3837C18.5855 13.8776 18.877 11.4297 18.877 11.4297C18.877 11.4297 15.1914 10.5602 12.6065 13.4456C10.3678 15.9445 11.242 18.8315 11.242 18.8315C11.242 18.8315 14.2727 18.1904 16.0794 16.3837Z" fill="black"/>
+                        <path d="M3.03081 16.6104C0.559645 14.6988 -0.0192912 10.8016 0.0584184 9.20859C1.55433 9.38344 5.10566 8.98712 7.3437 6.93558C9.58174 4.88405 9.7527 1.53476 9.55842 0C10.9572 0.194274 13.8363 0.594479 16.0278 2.50613C18.2192 4.41779 19.039 8.27607 18.9419 9.73313C17.6208 9.46115 14.3259 9.5 11.7149 11.8313C9.10382 14.1626 9.1893 17.5818 9.55842 19C8.37335 18.9223 5.50198 18.5221 3.03081 16.6104Z" fill="black"/>
+                    </svg>
 
 
 
-                Search 
-            </button>
+                    Search 
+                </button>
+            </div>
         </div>        
     )
 }
+
+
+const CourtSelectorModal = ({ groupedVenues, selectedVenues, setSelectedVenues }: any) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleCheckboxChange = (value: string) => {
+        setSelectedVenues((prev: string[]) =>
+            prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+        );
+    };
+
+    return (
+        <>
+            <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-2 rounded"
+            >
+                Select Courts
+            </button>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded shadow-lg w-11/12 max-w-md">
+                        <h2 className="text-lg font-semibold mb-4">Select Courts</h2>
+                        <div className="max-h-64 overflow-y-auto">
+                            {groupedVenues.map((group: any) => (
+                                <div key={group.label} className="mb-4">
+                                    <h3 className="font-semibold">{group.label}</h3>
+                                    {group.options.map((option: any) => (
+                                        <label key={option.value} className="block">
+                                            <input
+                                                type="checkbox"
+                                                value={option.value}
+                                                checked={selectedVenues.includes(option.value)}
+                                                onChange={() => handleCheckboxChange(option.value)}
+                                                className="mr-2"
+                                            />
+                                            {option.label}
+                                        </label>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="mt-4 bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-2 rounded"
+                        >
+                            Done
+                        </button>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
 
 export default CourtForm;

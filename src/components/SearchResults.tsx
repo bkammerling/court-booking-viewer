@@ -50,7 +50,6 @@ const ResultsGrid = ({ data }: { data: any }) => {
       { data.map((venueData: any) => {
         const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue };
         // Check if venueData.venueSessions is empty
-        if (!venueData.venueSessions || venueData.venueSessions.length === 0) return;
         return (
           <div key={venueData.venue} className="border border-gray-300 mb-4">
             <img 
@@ -66,11 +65,16 @@ const ResultsGrid = ({ data }: { data: any }) => {
                 </a>
               </h3>
               <div>
-                {venueData.venueSessions.map((session: any, index: number) => (
-                  <div key={index}>
-                    {session.start} - {session.end}
-                  </div>
-                ))}
+                { venueData.venueSessions.length > 0 ? (
+                  venueData.venueSessions.map((session: any, index: number) => (
+                    <div key={index}>
+                      {session.start} - {session.end}
+                    </div>
+                  )) 
+                  ):(
+                    <div className="text-gray-500">No available sessions</div>
+                  )
+                }
               </div>
             </div>
           </div>
@@ -95,7 +99,6 @@ const ResultsTable = ({ data }: { data: any }) => {
                 {data.map((venueData: any) => {
                   const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue };
                   // Check if venueData.venueSessions is empty
-                  if (!venueData.venueSessions || venueData.venueSessions.length === 0) return;
                   return (
                   <tr key={venueData.venue}>
                       <td className="border border-gray-300 px-4 py-2">
@@ -103,12 +106,16 @@ const ResultsTable = ({ data }: { data: any }) => {
                           { venue.name }
                         </a>
                       </td>
-                      <td className="border border-gray-300 px-4 py-2">
-                          {venueData.venueSessions.map((session: any, index: number) => (
-                              <div key={index}>
-                                  {session.start} - {session.end}
-                              </div>
-                          ))}
+                      <td className="border border-gray-300 px-4 py-2 min-w-min">
+                        { venueData.venueSessions.length > 0 ? (
+                            venueData.venueSessions.map((session: any, index: number) => (
+                                <div key={index}>
+                                    {session.start} - {session.end}
+                                </div>
+                            ))
+                          ):(
+                            <div className="text-gray-500">No available sessions</div>
+                          )}
                       </td>
                       <td className="border border-gray-300 px-4 py-2">
                           {venueData.venueSessions.map((session: any, index: number) => (

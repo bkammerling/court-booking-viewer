@@ -51,7 +51,7 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
                     type="date"
                     id="date"
                     value={selectedDate}
-                    className="border border-gray-300 rounded px-4 py-2 mt-2 block bg-white dark:bg-gray-700 text-black dark:text-white"
+                    className="border border-gray-300 rounded px-4 py-3 mt-2 text-lg block bg-white dark:bg-gray-700 text-black dark:text-white w-full"
                     onChange={(e) => {
                         setSelectedDate(e.target.value);
                     }}
@@ -65,13 +65,16 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
                     id="courtselect"
                     isMulti
                     closeMenuOnSelect={false}
+                    blurInputOnSelect={false}
                     onChange={(option) => onSelectChange(option as any)}
-                    className="mt-2 block rounded"
+                    classNames={{
+                        control: () => 'px-2 py-1 mt-2 text-lg',
+                    }}
                 />
             </div>
 
             <button 
-                className={`mt-4 px-10 py-2 bg-yellow-500 hover:bg-yellow-400 text-black transition rounded flex items-center justify-start gap-4 ${isFetching ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                className={`mt-5 px-10 py-3 bg-yellow-500 hover:bg-yellow-400 text-black transition rounded flex items-center justify-start gap-4 w-full md:w-auto ${isFetching ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                 onClick={() => handleSearchClick()}
                 disabled={isFetching}
             >

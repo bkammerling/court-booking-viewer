@@ -60,7 +60,6 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
             
             <div className="mb-3 md:mb-0 grow">
                 <label htmlFor="courtselect" className="mr-2 font-semibold">Courts</label>
-                { /* <CourtSelectorModal groupedVenues={groupedVenues} selectedVenues={selectedVenues} setSelectedVenues={setSelectedVenues} /> */}
                 <Select                    
                     options={groupedVenues}
                     id="courtselect"
@@ -103,59 +102,5 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
     )
 }
 
-
-const CourtSelectorModal = ({ groupedVenues, selectedVenues, setSelectedVenues }: any) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const handleCheckboxChange = (value: string) => {
-        setSelectedVenues((prev: string[]) =>
-            prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
-        );
-    };
-
-    return (
-        <>
-            <button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-2 rounded"
-            >
-                Select Courts
-            </button>
-
-            {isModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white p-6 rounded shadow-lg w-11/12 max-w-md">
-                        <h2 className="text-lg font-semibold mb-4">Select Courts</h2>
-                        <div className="max-h-64 overflow-y-auto">
-                            {groupedVenues.map((group: any) => (
-                                <div key={group.label} className="mb-4">
-                                    <h3 className="font-semibold">{group.label}</h3>
-                                    {group.options.map((option: any) => (
-                                        <label key={option.value} className="block">
-                                            <input
-                                                type="checkbox"
-                                                value={option.value}
-                                                checked={selectedVenues.includes(option.value)}
-                                                onChange={() => handleCheckboxChange(option.value)}
-                                                className="mr-2"
-                                            />
-                                            {option.label}
-                                        </label>
-                                    ))}
-                                </div>
-                            ))}
-                        </div>
-                        <button
-                            onClick={() => setIsModalOpen(false)}
-                            className="mt-4 bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-2 rounded"
-                        >
-                            Done
-                        </button>
-                    </div>
-                </div>
-            )}
-        </>
-    );
-};
 
 export default CourtForm;

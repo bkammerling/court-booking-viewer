@@ -51,7 +51,7 @@ const ResultsGrid = ({ data }: { data: any }) => {
         const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue };
         // Check if venueData.venueSessions is empty
         return (
-          <div key={venueData.venue} className="border border-gray-300 mb-4">
+          <div key={venueData.venue} className="shadow-lg mb-4">
             <img 
               src={`/courts/${venueData.venue}.jpg`} 
               alt={venue.name} 

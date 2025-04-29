@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic'
 import { Venue, GroupedOption, Option } from '@/types';
 import venuesJson from '@/venues.json';
-const Select = dynamic(() => import('react-select'), { ssr: false })
-
 
 function useIsMobile(): boolean {
     const [isMobile, setIsMobile] = useState(false);

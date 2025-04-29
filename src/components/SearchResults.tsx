@@ -76,6 +76,12 @@ const ResultsGrid = ({ data }: { data: any }) => {
                   )
                 }
               </div>
+              <a
+                className="mt-4 px-5 py-2 bg-yellow-500 hover:bg-yellow-400 text-black cursor-pointer transition rounded flex items-center gap-3"
+                href={venueData.bookingUrl}
+              >
+                Search 
+              </a>
             </div>
           </div>
         );

@@ -1,25 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic'
-import { Venue, GroupedOption, Option } from '@/types';
+import { useState } from 'react';
+import { Venue, GroupedOption } from '@/types';
 import venuesJson from '@/venues.json';
 
-function useIsMobile(): boolean {
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768); // Adjust breakpoint as needed
-        };
-
-        handleResize(); // Check on initial render
-        window.addEventListener('resize', handleResize);
-
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    return isMobile;
-};
 
 /* 
  * Renders a court selection form from our venues.json file
@@ -29,7 +12,6 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
     // Create a state object to manage venues with their slug and a boolean
     const [selectedVenues, setSelectedVenues] = useState<string[]>([]);
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-    const isMobile = useIsMobile();
     
     // Group venues by area
     const groupedVenues: GroupedOption[] = venuesJson.reduce((acc: GroupedOption[], venue: Venue) => {
@@ -170,7 +152,8 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
                         {/* Available Courts List */}
                         <div className="max-h-full overflow-y-auto mt-2 pr-3">
                             {groupedVenues.map((group: any, index: number) => (
-                                <>
+                                <div key={group.label}>
+                                    
                                     <h4 className={`text-xs mb-2 uppercase sticky top-0 bg-gray-100 dark:bg-gray-700 p-2 shadow-md rounded ${index !== 0 ? 'mt-2' : ''}`}>{group.label}</h4>
                                     {group.options.map((option: any) => {
                                         return (
@@ -186,7 +169,7 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
                                             </button>
                                         );
                                     })}
-                                </>
+                                </div>
                             ))}
                         </div>
 
@@ -220,7 +203,7 @@ const TagList = ({ selectedVenues, handleRemoveCourt }: { selectedVenues: string
             return (
                 <div
                     key={value}
-                    className="bg-gray-200 px-3 py-1 rounded flex items-center gap-2 text-sm text-gray-700 overflow-hidden"
+                    className="bg-gray-200 px-3 rounded flex items-center gap-2 text-sm text-gray-700 overflow-hidden"
                 >
                     <span className="truncate">{venue.name}</span>
                     <button

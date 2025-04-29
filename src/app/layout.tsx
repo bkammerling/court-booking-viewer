@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Navigation from "@/components/Navigation";
 import "./globals.css";
 
 export default function RootLayout({
@@ -11,17 +11,7 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <nav className="bg-gray-800 text-white p-4">
-          <div className="container mx-auto">
-            <div className="flex justify-between items-center">
-              <div className="text-lg font-bold">London Tennis Court Booker</div>
-              <div className="space-x-4">
-                <Link href="/" className="hover:text-gray-300">Home</Link>
-                <Link href="/dashboard" className="hover:text-gray-300">Dashboard</Link>
-              </div>
-            </div>
-          </div>
-        </nav>
+        <Navigation />
         <main className="px-4 pb-15">
           {children}
         </main>

@@ -55,10 +55,10 @@ const ResultsGrid = ({ data }: { data: any }) => {
             <img 
               src={`/courts/${venueData.venue}.jpg`} 
               alt={venue.name} 
-              className="w-full h-32 object-cover" 
+              className="w-full h-32 object-cover rounded-lg" 
               onError={(e) => (e.currentTarget.src = fallbackImage)}
             />
-            <div className="p-4">
+            <div className="p-3">
               <h3 className="text-lg font-bold mb-2">
                 <a href={venueData.bookingUrl} target="_blank" className="text-yellow-500 hover:underline">
                   { venue.name }

@@ -46,38 +46,37 @@ const SearchResults = ({ data }: { data: any }) => {
 const ResultsGrid = ({ data }: { data: any }) => {
   const fallbackImage = "/courts/random-tennis-court.webp";
   return (
-    <div className="overflow-x-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
       { data.map((venueData: any) => {
-        const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue };
+        const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue, area: "unknown" };
         // Check if venueData.venueSessions is empty
         return (
-          <div key={venueData.venue} className="rounded-lg shadow-lg mb-4">
+          <div key={venueData.venue} className="flex flex-col h-full rounded-lg shadow-lg  ">
             <img 
               src={`/courts/${venueData.venue}.jpg`} 
               alt={venue.name} 
-              className="w-full h-32 object-cover rounded-lg" 
+              className="object-cover rounded-t-lg row-span-1 w-full court-card-image" 
               onError={(e) => (e.currentTarget.src = fallbackImage)}
             />
-            <div className="p-3">
-              <h3 className="text-lg font-bold mb-2">
-                <a href={venueData.bookingUrl} target="_blank" className="text-yellow-500 hover:underline">
-                  { venue.name }
-                </a>
-              </h3>
-              <div>
-                { venueData.venueSessions.length > 0 ? (
-                  venueData.venueSessions.map((session: any, index: number) => (
-                    <div key={index}>
-                      {session.start} - {session.end}
-                    </div>
-                  )) 
-                  ):(
-                    <div className="text-gray-500">No available sessions</div>
-                  )
-                }
+            <div className="flex flex-col">
+              <div className="p-3">
+                <p className="text-xs uppercase">{venue.area}</p>
+                <h3 className="font-bold mb-1">{ venue.name }</h3>
+                <div className="mb-4">
+                  { venueData.venueSessions.length > 0 ? (
+                    venueData.venueSessions.map((session: any, index: number) => (
+                      <div key={index} className="text-sm text-gray-600">
+                        {session.start} - {session.end}
+                      </div>
+                    )) 
+                    ):(
+                      <div className="text-sm text-gray-600">No available sessions</div>
+                    )
+                  }
+                </div>
               </div>
               <a
-                className="mt-4 px-5 py-2 bg-yellow-500 hover:bg-yellow-400 text-black cursor-pointer transition rounded-full w-full flex items-center"
+                className="mt-auto px-5 py-2 bg-yellow-500 hover:bg-yellow-400 text-black cursor-pointer transition rounded-b-lg w-full"
                 href={venueData.bookingUrl}
               >
                 Book on LTA 

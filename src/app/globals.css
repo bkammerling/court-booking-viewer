@@ -23,3 +23,9 @@ body {
   padding-top: .38rem;
   padding-bottom: .38rem;
 }
+
+.court-card-image {
+  min-height: 120px;
+  height: 12vw;
+  max-height: 180px;
+}

@@ -126,12 +126,7 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
                 className="flex  justify-between border border-gray-300 rounded-full max-w-full px-4 py-3 mt-1 block bg-white dark:bg-gray-700 text-black dark:text-white cursor-pointer"
             >
                 {selectedVenues.length > 0 ? (
-                    <div className="flex gap-2 overflow-hidden  max-w-full">
-                        <TagList 
-                            selectedVenues={selectedVenues} 
-                            handleRemoveCourt={handleRemoveCourt} 
-                        />
-                    </div>
+                    <span>{selectedVenues.length} courts selected</span>
                 ) : (
                     <span className="text-gray-500">Select courts</span>
                 )}

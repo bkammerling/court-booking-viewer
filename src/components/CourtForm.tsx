@@ -48,22 +48,22 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
 
 
     return (
-        <div className="searchbar bg-gray-100 dark:bg-gray-800 p-5 rounded shadow my-4 md:grid md:grid-cols-6 gap-5">
+        <div className="searchbar bg-gray-100 dark:bg-gray-800 p-5 rounded shadow my-4 sm:grid sm:grid-cols-3 md:grid-cols-6 gap-5">
 
-            <div className="mb-3 md:mb-0">
+            <div className="mb-3 sm:mb-0 md:col-span-2">
                 <label htmlFor="date" className="mr-2 font-semibold">Date</label>
                 <input
                     type="date"
                     id="date"
                     value={selectedDate}
-                    className="border border-gray-300 rounded-full px-4 py-3 mt-1 block bg-white dark:bg-gray-700 text-black dark:text-white w-full appearance-none"
+                    className="min-w-min border border-gray-300 rounded-full px-4 py-3 mt-1 block bg-white dark:bg-gray-700 text-black dark:text-white w-full appearance-none"
                     onChange={(e) => {
                         setSelectedDate(e.target.value);
                     }}
                 />
             </div>
             
-            <div className="mb-3 md:mb-0 col-span-4">
+            <div className="mb-3 sm:mb-0 md:col-span-3">
                 <label htmlFor="courtselect" className="mr-2 font-semibold">Courts</label>
                 
                     <CourtSelectorModal 

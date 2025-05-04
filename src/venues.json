@@ -41,7 +41,7 @@
     },
     {
       "id": "brunswickpark1",
-      "name": "Brunswick Park (Southwark)",
+      "name": "Brunswick Park",
       "slug": "BrunswickPark",
       "provider": "lta",
       "area": "Southwark",
@@ -71,6 +71,15 @@
       "area": "Southwark",
       "courts": 4
     },
+    {
+      "id": "belairparkr1",
+      "name": "Belair Park",
+      "slug": "BelairPark",
+      "provider": "lta",
+      "area": "Southwark",
+      "courts": 4
+    },
+    
     {
       "id": "clissoldpark1",
       "name": "Clissold Park",

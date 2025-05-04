@@ -23,7 +23,11 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
         }
         group.options.push({ value: venue.slug, label: venue.name });
         return acc;
-    }, []);
+    }, []).map((group) => {
+        // Sort the options alphabetically by label
+        group.options.sort((a, b) => a.label.localeCompare(b.label));
+        return group;
+    });;
 
     const handleAddCourt = (value: string) => {
         if(selectedVenues.includes(value)) {
@@ -123,10 +127,10 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
         <>
             <div
                 onClick={() => setIsModalOpen(true)}
-                className="flex  justify-between border border-gray-300 rounded-full max-w-full px-4 py-3 mt-1 block bg-white dark:bg-gray-700 text-black dark:text-white cursor-pointer"
+                className="flex  justify-between border border-gray-300 rounded-full max-w-full px-4 py-3 mt-1 bg-white dark:bg-gray-700 text-black dark:text-white cursor-pointer"
             >
                 {selectedVenues.length > 0 ? (
-                    <span>{selectedVenues.length} courts selected</span>
+                    <span className="truncate">{selectedVenues.length} courts selected</span>
                 ) : (
                     <span className="text-gray-500">Select courts</span>
                 )}
@@ -140,26 +144,30 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
                     onClick={() => setIsModalOpen(false)} // Close modal when clicking on the overlay
                 >
                     <div 
-                        className="bg-white dark:bg-gray-800 p-6 rounded shadow-lg w-11/12 max-w-2xl grid grid-cols-2 h-5/6"
+                        className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-11/12 max-w-2xl grid grid-cols-2 h-5/6"
                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
                     >
-                        <h3 className="text-xl font-semibold mb-1 col-span-2">Select Courts</h3>
+                        <h3 className="font-semibold py-2 mb-2 text-sm col-span-2 text-center border-b border-gray-200">Select Courts</h3>
                         {/* Available Courts List */}
-                        <div className="max-h-full overflow-y-auto mt-2 pr-3">
+                        <div className="max-h-full overflow-y-auto px-3 col-span-2">
+                            
                             {groupedVenues.map((group: any, index: number) => (
                                 <div key={group.label}>
                                     
-                                    <h4 className={`text-xs mb-2 uppercase sticky top-0 bg-gray-100 dark:bg-gray-700 p-2 shadow-md rounded ${index !== 0 ? 'mt-2' : ''}`}>{group.label}</h4>
+                                    <h4 className={`font-semibold top-0 bg-white dark:bg-gray-700 pt-2 pb-3  ${index !== 0 ? 'mt-2' : ''}`}>
+                                        {group.label}
+                                    </h4>
+
                                     {group.options.map((option: any) => {
                                         return (
                                             <button
                                                 key={option.value}
                                                 onClick={() => handleAddCourt(option.value)}
-                                                className="block w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-200"
+                                                className={`flex-inline text-left mb-3 mr-3 text-sm px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border rounded-full ${selectedVenues.includes(option.value) ? 'outline-1 outline-gray-500 bg-gray-50' : 'border-gray-200'}`}
                                             >
                                                 {option.label}
                                                 {selectedVenues.includes(option.value) && (
-                                                    <span className="text-green-500 pl-2">✔</span>
+                                                    <span className="text-green-600 hidden pl-2">✔</span>
                                                 )}
                                             </button>
                                         );
@@ -168,7 +176,7 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
                             ))}
                         </div>
 
-                        <div className="flex flex-wrap items-start content-start gap-1 pl-1">
+                        <div className="hidden mid:flex flex-wrap items-start content-start gap-1 pl-1 ">
                             <TagList 
                                 selectedVenues={selectedVenues} 
                                 handleRemoveCourt={handleRemoveCourt} 
@@ -179,7 +187,7 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
                             onClick={() => setIsModalOpen(false)}
                             className="mt-4 bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-2 rounded col-span-2 cursor-pointer"
                         >
-                            Done
+                            Choose { selectedVenues.length || '' } court{ selectedVenues.length > 1 && 's' }
                         </button>
                     </div>
                 </div>
@@ -198,7 +206,7 @@ const TagList = ({ selectedVenues, handleRemoveCourt }: { selectedVenues: string
             return (
                 <div
                     key={value}
-                    className="bg-gray-200 px-3 rounded flex items-center gap-2 text-sm text-gray-700 overflow-hidden"
+                    className="bg-gray-200 px-3 py-2 rounded flex items-center gap-2 text-sm text-gray-700 overflow-hidden"
                 >
                     <span className="truncate">{venue.name}</span>
                     <button

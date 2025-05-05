@@ -5,13 +5,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --header-height: 65px;
 }
 
 .dark {
-  --background: #0a0a0a;
+  --background: #1e1e1e;
   --foreground: #ededed;
 }
-
 
 body {
   background: var(--background);
@@ -28,4 +28,15 @@ body {
   min-height: 120px;
   height: 12vw;
   max-height: 180px;
+}
+
+/* Leaflet map overrides */
+
+main {
+  .leaflet-popup-content p {
+    margin: 0;
+  }
+  .leaflet-container {
+    height: calc(100vh - var(--header-height));
+  }
 }

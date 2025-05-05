@@ -1,9 +1,13 @@
-import CourtBooking from "@/components/CourtBooking";
+'use client';
+
+//import CourtBooking from "@/components/CourtBooking";
+import dynamic from "next/dynamic";
+const Map = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function Home() {
   return (
-    <div className="container mx-auto">
-      <CourtBooking  />
-    </div>
+    
+      <Map />
+    
   );
 }

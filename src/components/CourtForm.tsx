@@ -154,7 +154,7 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
                             {groupedVenues.map((group: any, index: number) => (
                                 <div key={group.label}>
                                     
-                                    <h4 className={`font-semibold top-0 bg-white dark:bg-gray-700 pt-2 pb-3  ${index !== 0 ? 'mt-2' : ''}`}>
+                                    <h4 className={`font-semibold top-0 pt-2 pb-3  ${index !== 0 ? 'mt-2' : ''}`}>
                                         {group.label}
                                     </h4>
 
@@ -163,7 +163,7 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
                                             <button
                                                 key={option.value}
                                                 onClick={() => handleAddCourt(option.value)}
-                                                className={`flex-inline text-left mb-3 mr-3 text-sm px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border rounded-full ${selectedVenues.includes(option.value) ? 'outline-1 outline-gray-500 bg-gray-50' : 'border-gray-200'}`}
+                                                className={`flex-inline text-left mb-3 mr-3 text-sm px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border rounded-full ${selectedVenues.includes(option.value) ? 'outline-1 outline-gray-500 bg-gray-50 dark:outline-gray-300 dark:bg-gray-600' : 'border-gray-200'}`}
                                             >
                                                 {option.label}
                                                 {selectedVenues.includes(option.value) && (

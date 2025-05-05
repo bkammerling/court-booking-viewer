@@ -51,7 +51,7 @@ const ResultsGrid = ({ data }: { data: any }) => {
         const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue, area: "unknown" };
         // Check if venueData.venueSessions is empty
         return (
-          <div key={venueData.venue} className="flex flex-col h-full rounded-lg shadow-lg  ">
+          <div key={venueData.venue} className="flex flex-col h-full rounded-lg shadow-lg dark:bg-black ">
             <img 
               src={`/courts/${venueData.venue}.jpg`} 
               alt={venue.name} 
@@ -65,12 +65,12 @@ const ResultsGrid = ({ data }: { data: any }) => {
                 <div className="mb-4">
                   { venueData.venueSessions.length > 0 ? (
                     venueData.venueSessions.map((session: any, index: number) => (
-                      <div key={index} className="text-sm text-gray-600">
+                      <div key={index} className="text-sm text-gray-600 dark:text-gray-300">
                         {session.start} - {session.end}
                       </div>
                     )) 
                     ):(
-                      <div className="text-sm text-gray-600">No available sessions</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">No available sessions</div>
                     )
                   }
                 </div>

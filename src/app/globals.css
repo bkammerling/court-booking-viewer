@@ -40,3 +40,38 @@ main {
     height: calc(100vh - var(--header-height));
   }
 }
+
+/* HTML marker styles */
+
+/* use bg-yellow-500 for the marker color */
+.court-marker {
+  background-color: oklch(79.5% 0.184 86.047);
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 14px;
+  padding: 10px 15px;
+  position: relative;
+}
+
+.court-marker::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 0);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid oklch(79.5% 0.184 86.047);
+}
+
+.courts-label {
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+}

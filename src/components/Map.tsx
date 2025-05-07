@@ -6,17 +6,14 @@ import "leaflet/dist/leaflet.css";
 import venuesJson from "@/venues.json"; 
 
 
-// Fix for default marker icons not displaying correctly (needs 'require')
-const markerIcon = require("leaflet/dist/images/marker-icon.png");
-const markerShadow = require("leaflet/dist/images/marker-shadow.png");
-
-const DefaultIcon = L.icon({
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
-  iconAnchor: [12, 41], // Adjust anchor to center the marker properly
-  popupAnchor: [1, -34],
-});
-L.Marker.prototype.options.icon = DefaultIcon;
+const createCustomIcon = (courts: number) => {
+  return L.divIcon({
+    className: 'court-marker',
+    html: `<span class="courts-label">${courts}</span>`,
+    iconAnchor: [12, 32], // Adjust anchor to center the marker properly
+    popupAnchor: [5, -28],
+  });
+}
 
 const MapCourts = () => {
   const map = useMap()
@@ -70,8 +67,9 @@ const Map = () => {
       
       { venuesJson.map((venue) => {
         const [ latitude, longitude ] = venue.latlng.split(",").map(Number);
+        const customIcon = createCustomIcon(venue.courts); // Create a custom icon for each venue
         return (
-          <Marker position={[latitude, longitude]} key={venue.name}>
+          <Marker position={[latitude, longitude]} key={venue.name} icon={customIcon}>
             <Popup>
               <div>
                 <h3 className="font-semibold">{venue.name}</h3>

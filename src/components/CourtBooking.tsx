@@ -30,7 +30,7 @@ const CourtBooking = () => {
         <div>
           <div className="">
             <CourtForm onSearch={handleSearch} isFetching={isFetching} />
-            <SearchResults data={searchResults} />
+            <SearchResults data={searchResults} isLoading={isFetching} />
           </div>
         </div>
     );

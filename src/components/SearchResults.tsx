@@ -3,12 +3,29 @@ import { useState } from 'react';
 import venues from '@/venues.json';
 import { Venue } from '@/types';
 
-const SearchResults = ({ data }: { data: any }) => {
+const SearchResults = ({ data, isLoading }: { data: any, isLoading: boolean }) => {
   const [isGridView, setIsGridView] = useState(true);
 
   // Check if data is null or undefined
-  if (!data) {
-      return <p>No results to display.</p>;
+  if (!data && !isLoading) {
+      return;
+  }
+
+  if(isLoading) {
+    return (
+      <div className="flex justify-center items-center pt-20">
+        <svg 
+            viewBox="0 0 19 19" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+            className={`h-32 w-32 fill-current text-yellow-400 ${isLoading ? 'animate-spin' : ''}`}
+        >
+            <path d="M3.03094 2.56443C0.524809 5.07057 0.233398 7.51842 0.233398 7.51842C0.233398 7.51842 3.91895 8.38793 6.50386 5.50256C8.7426 3.00359 7.86837 0.116577 7.86837 0.116577C7.86837 0.116577 4.83769 0.757682 3.03094 2.56443Z" fill=""/>
+            <path d="M16.0794 16.3837C18.5855 13.8776 18.877 11.4297 18.877 11.4297C18.877 11.4297 15.1914 10.5602 12.6065 13.4456C10.3678 15.9445 11.242 18.8315 11.242 18.8315C11.242 18.8315 14.2727 18.1904 16.0794 16.3837Z" fill=""/>
+            <path d="M3.03081 16.6104C0.559645 14.6988 -0.0192912 10.8016 0.0584184 9.20859C1.55433 9.38344 5.10566 8.98712 7.3437 6.93558C9.58174 4.88405 9.7527 1.53476 9.55842 0C10.9572 0.194274 13.8363 0.594479 16.0278 2.50613C18.2192 4.41779 19.039 8.27607 18.9419 9.73313C17.6208 9.46115 14.3259 9.5 11.7149 11.8313C9.10382 14.1626 9.1893 17.5818 9.55842 19C8.37335 18.9223 5.50198 18.5221 3.03081 16.6104Z" fill=""/>
+        </svg>
+      </div>
+    )
   }
 
   const allSessions = data.flatMap(( venue:any ) => venue.venueSessions);
@@ -17,20 +34,35 @@ const SearchResults = ({ data }: { data: any }) => {
     return <p>No courts available. Try selecting more courts or a different day.</p>;
   }
 
+
   return (
     // Button group to toggle between grid and table view
     <>
     <div className="flex justify-end mb-4">
       <button
-        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l"
+        className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l flex items-center ${isGridView ? 'bg-gray-300' : ''}`}
         onClick={() => setIsGridView(true)}
       >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            viewBox="0 -960 960 960"
+            className="h-4 w-4 fill-current mr-2 inline"
+          >
+            <path d="M80-560v-320h320v320H80Zm80-80h160v-160H160v160ZM80-80v-320h320v320H80Zm80-80h160v-160H160v160Zm400-400v-320h320v320H560Zm80-80h160v-160H640v160ZM560-80v-320h320v320H560Zm80-80h160v-160H640v160ZM320-640Zm0 320Zm320-320Zm0 320Z" />
+          </svg>
         Grid View
       </button>
       <button 
-        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r"
+        className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r flex items-center ${!isGridView ? 'bg-gray-300' : ''}`}
         onClick={() => setIsGridView(false)}
       >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 -960 960 960"
+          className="h-6 w-6 fill-current mr-2 inline"
+        >
+          <path d="M360-240h440v-107H360v107ZM160-613h120v-107H160v107Zm0 187h120v-107H160v107Zm0 186h120v-107H160v107Zm200-186h440v-107H360v107Zm0-187h440v-107H360v107ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Z"/>
+        </svg>
         Table View
       </button>
     </div>
@@ -46,12 +78,12 @@ const SearchResults = ({ data }: { data: any }) => {
 const ResultsGrid = ({ data }: { data: any }) => {
   const fallbackImage = "/courts/random-tennis-court.webp";
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
+    <div className="gap-4 columns-2 md:columns-3 lg:columns-4">
       { data.map((venueData: any) => {
         const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue, area: "unknown" };
         // Check if venueData.venueSessions is empty
         return (
-          <div key={venueData.venue} className="flex flex-col h-full rounded-lg shadow-lg dark:bg-black ">
+          <div key={venueData.venue} className="inline-block w-full mb-5 h-full rounded-lg shadow-lg dark:bg-black ">
             <img 
               src={`/courts/${venueData.venue}.jpg`} 
               alt={venue.name} 

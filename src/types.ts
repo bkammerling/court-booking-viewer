@@ -11,11 +11,13 @@ export interface Slot {
     start: number;
     end: number;
     cost: number;
+    duration?: number;
 }
 
 export interface CourtAvailability {
-    courtName: string;
+    courtSlug: string;
     availableSlots: Slot[];
+    bookingUrl?: string;
 }
 
 export interface Option {

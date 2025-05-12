@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
+import VenueCard from './VenueCard';
 import venues from '@/venues.json';
-import { Venue } from '@/types';
+import { CourtAvailability, Venue } from '@/types';
 
 const SearchResults = ({ data, isLoading }: { data: any, isLoading: boolean }) => {
   const [isGridView, setIsGridView] = useState(true);
@@ -40,7 +41,7 @@ const SearchResults = ({ data, isLoading }: { data: any, isLoading: boolean }) =
     <>
     <div className="flex justify-end mb-4">
       <button
-        className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l flex items-center ${isGridView ? 'bg-gray-300' : ''}`}
+        className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l flex items-center ${isGridView ? 'bg-gray-300' : 'cursor-pointer'}`}
         onClick={() => setIsGridView(true)}
       >
           <svg 
@@ -53,7 +54,7 @@ const SearchResults = ({ data, isLoading }: { data: any, isLoading: boolean }) =
         Grid View
       </button>
       <button 
-        className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r flex items-center ${!isGridView ? 'bg-gray-300' : ''}`}
+        className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r flex items-center ${!isGridView ? 'bg-gray-300' : 'cursor-pointer'}`}
         onClick={() => setIsGridView(false)}
       >
         <svg 
@@ -76,44 +77,21 @@ const SearchResults = ({ data, isLoading }: { data: any, isLoading: boolean }) =
 };
 
 const ResultsGrid = ({ data }: { data: any }) => {
-  const fallbackImage = "/courts/random-tennis-court.webp";
   return (
-    <div className="gap-4 columns-2 md:columns-3 lg:columns-4">
-      { data.map((venueData: any) => {
-        const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue, area: "unknown" };
+    <div className={`${
+        data.length <= 10
+          ? 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4' // Row layout for 2 or fewer items
+          : 'gap-4 columns-2 md:columns-3 lg:columns-4' // Masonry layout for more than 2 items
+      }`}>
+      { data.map((venueData: CourtAvailability) => {
+        const venue = venues.find((venue: Venue) => venue.slug == venueData.courtSlug);
         // Check if venueData.venueSessions is empty
+        if (!venue) {
+          return null; // Skip if venue is not found
+        }
         return (
-          <div key={venueData.venue} className="inline-block w-full mb-5 h-full rounded-lg shadow-lg dark:bg-black ">
-            <img 
-              src={`/courts/${venueData.venue}.jpg`} 
-              alt={venue.name} 
-              className="object-cover rounded-t-lg row-span-1 w-full court-card-image" 
-              onError={(e) => (e.currentTarget.src = fallbackImage)}
-            />
-            <div className="flex flex-col">
-              <div className="p-3">
-                <p className="text-xs uppercase">{venue.area}</p>
-                <h3 className="font-bold mb-1">{ venue.name }</h3>
-                <div className="mb-4">
-                  { venueData.venueSessions.length > 0 ? (
-                    venueData.venueSessions.map((session: any, index: number) => (
-                      <div key={index} className="text-sm text-gray-600 dark:text-gray-300">
-                        {session.start} - {session.end}
-                      </div>
-                    )) 
-                    ):(
-                      <div className="text-sm text-gray-600 dark:text-gray-300">No available sessions</div>
-                    )
-                  }
-                </div>
-              </div>
-              <a
-                className="mt-auto px-5 py-2 bg-yellow-500 hover:bg-yellow-400 text-black cursor-pointer transition rounded-b-lg w-full"
-                href={venueData.bookingUrl}
-              >
-                Book on LTA 
-              </a>
-            </div>
+          <div className="flex-grow basis-[calc(25%-1rem)] md:basis-[calc(33.333%-1rem)] lg:basis-[calc(25%-1rem)]">
+            <VenueCard key={venue.slug} venue={venue} availability={venueData} />
           </div>
         );
       })}
@@ -133,19 +111,19 @@ const ResultsTable = ({ data }: { data: any }) => {
                 </tr>
             </thead>
             <tbody>
-                {data.map((venueData: any) => {
-                  const venue = venues.find((venue: Venue) => venue.slug == venueData.venue) || { name: venueData.venue };
+                {data.map((venueData: CourtAvailability) => {
+                  const venue = venues.find((venue: Venue) => venue.slug == venueData.courtSlug) || { name: venueData.courtSlug };
                   // Check if venueData.venueSessions is empty
                   return (
-                  <tr key={venueData.venue}>
+                  <tr key={venueData.courtSlug}>
                       <td className="border border-gray-300 px-4 py-2">
                         <a href={venueData.bookingUrl} target="_blank" className="text-yellow-500 hover:underline">
                           { venue.name }
                         </a>
                       </td>
                       <td className="border border-gray-300 px-4 py-2 min-w-min">
-                        { venueData.venueSessions.length > 0 ? (
-                            venueData.venueSessions.map((session: any, index: number) => (
+                        { venueData.availableSlots.length > 0 ? (
+                            venueData.availableSlots.map((session: any, index: number) => (
                                 <div key={index}>
                                     {session.start} - {session.end}
                                 </div>
@@ -155,7 +133,7 @@ const ResultsTable = ({ data }: { data: any }) => {
                           )}
                       </td>
                       <td className="border border-gray-300 px-4 py-2">
-                          {venueData.venueSessions.map((session: any, index: number) => (
+                          {venueData.availableSlots.map((session: any, index: number) => (
                               <div key={index}>£{session.cost.toFixed(2)}</div>
                           ))}
                       </td>

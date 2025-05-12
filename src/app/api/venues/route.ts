@@ -34,9 +34,9 @@ export async function GET(request: Request) {
 
       const sessionData = resourceDataArray.map((resourceData) => { 
         if(!resourceData.venueSlug || resourceData.error) return;
-        const venueSessions = getAvailableSessions(resourceData.sessions, formattedDate);
+        const availableSlots = getAvailableSessions(resourceData.sessions, formattedDate);
         const bookingUrl = getVenueBookingUrl(resourceData.venueSlug, provider, formattedDate);
-        return { venue: resourceData.venueSlug, venueSessions, bookingUrl };
+        return { courtSlug: resourceData.venueSlug, availableSlots, bookingUrl };
       })
       
 
@@ -80,7 +80,7 @@ const getAvailableSessions = (resourceData: any, formattedDate: string) => {
     console.log(courtAvailable);
 
     allCourtsAvailability.push({
-      courtName: court.Name,
+      courtSlug: court.Name,
       availableSlots: courtAvailable
     });
   });

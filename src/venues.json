@@ -26,8 +26,8 @@
     "id": "vauxhallpark",
     "slug": "VauxhallPark",
     "area": "Lambeth",
-    "address": "Vauxhall, London, UK",
-    "latlng": "51.4861671,-0.12172",
+    "address": "Vauxhall Park, Vauxhall Park, Lawn Ln, London SW8 1JY, UK",
+    "latlng": "51.4830756,-0.1220297",
     "courts": 2,
     "floodlitcourts": 0,
     "provider": "lta"
@@ -37,8 +37,8 @@
     "id": "claphamcommon",
     "slug": "ClaphamCommon",
     "area": "Lambeth",
-    "address": "Clapham Common, Clapham Common, Windmill Dr, London SW4 9DE, UK",
-    "latlng": "51.4589252,-0.1493071",
+    "address": "Clapham Common, London, UK",
+    "latlng": "51.4556465,-0.1385544",
     "courts": 8,
     "floodlitcourts": 5,
     "provider": "lta"
@@ -228,6 +228,105 @@
     "latlng": "51.4733469,-0.1309632",
     "courts": 2,
     "floodlitcourts": 2,
+    "provider": "lta"
+  },
+  {
+    "name": "Hilly Fields",
+    "id": "hillyfields",
+    "slug": "HillyFields",
+    "area": "Lewisham",
+    "address": "Hilly Fields, 12 Montague Ave, London SE4 1YP, UK",
+    "latlng": "51.4600771,-0.0258444",
+    "courts": 2,
+    "floodlitcourts": 0,
+    "provider": "lta"
+  },
+  {
+    "name": "Ladywell Fields",
+    "id": "ladywellfields",
+    "slug": "LadywellFields",
+    "area": "Lewisham",
+    "address": "Ladywell Fields, 126 Ewhurst Rd, London SE4 1SD, UK",
+    "latlng": "51.4486753,-0.027069",
+    "courts": 5,
+    "floodlitcourts": 4,
+    "provider": "lta"
+  },
+  {
+    "name": "Manor House Gardens",
+    "id": "manorhousegds",
+    "slug": "ManorHouseGds",
+    "area": "Lewisham",
+    "address": "Manor House Gardens, Taunton Rd, London SE13 5SU, UK",
+    "latlng": "51.45633429999999,0.0046996",
+    "courts": 2,
+    "floodlitcourts": 0,
+    "provider": "lta"
+  },
+  {
+    "name": "Mayow Park",
+    "id": "mayowpark",
+    "slug": "MayowPark",
+    "area": "Lewisham",
+    "address": "Mayow Park, London SE26 4SS, UK",
+    "latlng": "51.4299638,-0.0486294",
+    "courts": 2,
+    "floodlitcourts": 0,
+    "provider": "lta"
+  },
+  {
+    "name": "Sydenham Well Park",
+    "id": "sydenhamwellpark",
+    "slug": "SydenhamWellPark",
+    "area": "Lewisham",
+    "address": "Sydenham, London SE26 6XN, UK",
+    "latlng": "51.42476,-0.059399",
+    "courts": 2,
+    "floodlitcourts": 0,
+    "provider": "lta"
+  },
+  {
+    "name": "Telegraph Hill",
+    "id": "telegraphhill",
+    "slug": "TelegraphHill",
+    "area": "Lewisham",
+    "address": "Telegraph Hill, London NW3 7NU, UK",
+    "latlng": "51.5618304,-0.1904169",
+    "courts": 2,
+    "floodlitcourts": 0,
+    "provider": "lta"
+  },
+  {
+    "name": "Honor Oak Recreation Ground",
+    "id": "honoroakrecreationground",
+    "slug": "HonorOakRecreationGround",
+    "area": "Southwark",
+    "address": "Honor Oak Park, London SE23, UK",
+    "latlng": "51.4498769,-0.04671",
+    "courts": 2,
+    "floodlitcourts": 0,
+    "provider": "lta"
+  },
+  {
+    "name": "Catford Bridge",
+    "id": "catfordbridge",
+    "slug": "CatfordBridge",
+    "area": "Lewisham",
+    "address": "Catford Bridge, London SE6 4RH, UK",
+    "latlng": "51.444849,-0.0247218",
+    "courts": 2,
+    "floodlitcourts": 0,
+    "provider": "lta"
+  },
+  {
+    "name": "Chinbrook Park",
+    "id": "chinbrookpark",
+    "slug": "ChinbrookPark",
+    "area": "Lewisham",
+    "address": "Chinbrook, London SE12 9QQ, UK",
+    "latlng": "51.4316355,0.0314418",
+    "courts": 2,
+    "floodlitcourts": 0,
     "provider": "lta"
   }
 ]

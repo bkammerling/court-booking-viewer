@@ -75,3 +75,29 @@ main {
   transform: translateX(-50%);
   color: black;
 }
+
+/* make location marker look like googles blue dot */
+/* use bg-blue-500 for the marker color */
+.your-location.leaflet-marker-icon {
+  background-color: oklch(79.5% 0.184 240.047);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  z-index: 1000 !important;
+  border: 2px solid white;
+  box-shadow: 0 0 5px rgba(44, 15, 236, 0.5);
+}
+
+.leaflet-container {
+  .leaflet-popup {
+    .leaflet-popup-content {
+      margin: 0 !important;
+    }
+    .leaflet-popup-close-button {
+      background-color: white;
+      border-radius: 50%;
+      margin: 5px;
+    }
+  }
+}

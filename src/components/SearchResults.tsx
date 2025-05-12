@@ -90,8 +90,8 @@ const ResultsGrid = ({ data }: { data: any }) => {
           return null; // Skip if venue is not found
         }
         return (
-          <div className="flex-grow basis-[calc(25%-1rem)] md:basis-[calc(33.333%-1rem)] lg:basis-[calc(25%-1rem)]">
-            <VenueCard key={venue.slug} venue={venue} availability={venueData} />
+          <div key={venue.slug} className="flex-grow basis-[calc(25%-1rem)] md:basis-[calc(33.333%-1rem)] lg:basis-[calc(25%-1rem)]">
+            <VenueCard venue={venue} availability={venueData} />
           </div>
         );
       })}

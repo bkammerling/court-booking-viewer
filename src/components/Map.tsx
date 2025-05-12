@@ -17,7 +17,7 @@ const createCourtIcon = (courts: number) => {
 }
 
 
-const createLocationIcon = (courts: number) => {
+const createLocationIcon = () => {
   return L.divIcon({
     className: 'your-location',
     iconAnchor: [10, 10], // Adjust anchor to center the marker properly
@@ -28,14 +28,14 @@ const LocationMarker = () => {
   const [position, setPosition] = useState<L.LatLng | null>(null);
   const map = useMap();
   if(!position) map.locate();
-  const mapEvents = useMapEvents({
+  useMapEvents({
     locationfound(e) {
       setPosition(e.latlng)
       map.setView(e.latlng, 13);},
   })
 
   return position ? (
-    <Marker position={position} icon={createLocationIcon(0)}>
+    <Marker position={position} icon={createLocationIcon()}>
       <Popup>You are here</Popup>
     </Marker>
   ) : null;

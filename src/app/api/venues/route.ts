@@ -21,7 +21,11 @@ export async function GET(request: Request) {
         slugs.map(async (venueSlug: string) => {
   
           const url = getVenueSessionsUrl(venueSlug, provider, formattedDate);
-          const response = await fetch(url);
+          const response = await fetch(url, {
+            next: {
+              revalidate: 900, // 15 mins
+            },
+          });
   
           if (!response.ok) {
             return { sessions: null, error: true };

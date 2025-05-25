@@ -44,7 +44,7 @@ export async function GET(request: Request) {
       })
       
 
-      return new Response(JSON.stringify(sessionData), {
+      return new Response(JSON.stringify({ sessionData, formattedDate }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
       });

@@ -53,21 +53,8 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
 
     return (
         <div className="searchbar bg-gray-100 dark:bg-gray-800 p-5 rounded shadow my-4 sm:grid sm:grid-cols-3 md:grid-cols-6 gap-5">
-
-            <div className="mb-3 sm:mb-0 md:col-span-2">
-                <label htmlFor="date" className="mr-2 font-semibold">Date</label>
-                <input
-                    type="date"
-                    id="date"
-                    value={selectedDate}
-                    className="min-w-min border border-gray-300 rounded-full px-4 py-3 mt-1 block bg-white dark:bg-gray-700 text-black dark:text-white w-full appearance-none"
-                    onChange={(e) => {
-                        setSelectedDate(e.target.value);
-                    }}
-                />
-            </div>
             
-            <div className="mb-3 sm:mb-0 md:col-span-3">
+            <div className="mb-3 sm:mb-0 md:col-span-2 lg:col-span-3">
                 <label htmlFor="courtselect" className="mr-2 font-semibold">Courts</label>
                 
                     <CourtSelectorModal 
@@ -76,23 +63,44 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
                         handleAddCourt={handleAddCourt}
                         handleRemoveCourt={handleRemoveCourt}
                     />
-                {/*
-                    <Select
-                        options={groupedVenues}
-                        id="courtselect"
-                        isMulti
-                        closeMenuOnSelect={false}
-                        blurInputOnSelect={false}
-                        isSearchable={false}
-                        onChange={(option) => onSelectChange(option as any)}
-                        placeholder="Select courts"
-                        minMenuHeight={700}
-                        classNames={{
-                            control: () => 'px-2 py-015 mt-2',
-                        }}
-                    />
-                    */}
-                
+            </div>
+
+            <div className="mb-3 sm:mb-0 md:col-span-3 lg:col-span-2">
+                <label htmlFor="date" className="mr-2 font-semibold">Date</label>
+                <div className="flex mt-1 border border-gray-300 rounded-full bg-white px-2 justify-around overflow-x-scroll">
+                    {Array.from({ length: 8 }).map((_, index) => {
+                        const date = new Date();
+                        date.setDate(date.getDate() + index);
+                        const dayName = date.toLocaleDateString('en-US', { weekday: 'short' }).charAt(0); // First letter of the day
+                        const dayNumber = date.getDate();
+                        const isSelected = selectedDate === date.toISOString().split('T')[0];
+
+                        return (
+                            <button
+                                key={index}
+                                onClick={() => setSelectedDate(date.toISOString().split('T')[0])}
+                                disabled={index === 7 && new Date().getHours() < 22} // Disable the last button if it's before 10 PM
+                                className={`flex flex-col items-center justify-center px-2 py-1 w-[35px] ${
+                                    isSelected ? 'bg-yellow-500 text-black' : 'dark:bg-gray-700 text-gray-700 dark:text-white'
+                                } ${
+                                    index === 7 && new Date().getHours() < 22 ? 'cursor-default opacity-50' : 'cursor-pointer'
+                                }`}
+                            >
+                                <span className="text-xs font-semibold text-gray-500">{dayName}</span>
+                                <span className={`${index == 0 ? 'font-bold' : ''}`}>{dayNumber}</span>
+                            </button>
+                        );
+                    })}
+                </div>
+                <input
+                    type="hidden"
+                    id="date"
+                    value={selectedDate}
+                    className="min-w-min border border-gray-300 rounded-full px-4 py-3 mt-1 block bg-white dark:bg-gray-700 text-black dark:text-white w-full appearance-none"
+                    onChange={(e) => {
+                        setSelectedDate(e.target.value);
+                    }}
+                />
             </div>
             
             <div className={`self-end`}>
@@ -140,7 +148,7 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
 
             {isModalOpen && (
                 <div 
-                    className="fixed inset-0 bg-black/50 flex justify-center items-center"
+                    className="fixed inset-0 bg-black/50 flex justify-center items-center z-100"
                     onClick={() => setIsModalOpen(false)} // Close modal when clicking on the overlay
                 >
                     <div 

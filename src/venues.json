@@ -37,8 +37,8 @@
     "id": "claphamcommon",
     "slug": "ClaphamCommon",
     "area": "Lambeth",
-    "address": "Clapham Common, London, UK",
-    "latlng": "51.4556465,-0.1385544",
+    "address": "Clapham Common, Clapham Common, Windmill Dr, London SW4 9DE, UK",
+    "latlng": "51.4589252,-0.1493071",
     "courts": 8,
     "floodlitcourts": 5,
     "provider": "lta"
@@ -290,8 +290,8 @@
     "id": "telegraphhill",
     "slug": "TelegraphHill",
     "area": "Lewisham",
-    "address": "Telegraph Hill, London NW3 7NU, UK",
-    "latlng": "51.5618304,-0.1904169",
+    "address": "Telegraph Hill Upper Park, Kitto Rd, London SE14 5TN, UK",
+    "latlng": "51.467282,-0.04636589999999999",
     "courts": 2,
     "floodlitcourts": 0,
     "provider": "lta"

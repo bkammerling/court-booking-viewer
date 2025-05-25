@@ -25,8 +25,8 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-b-gray-800 dark:text-white p-4">
-      <div className="container mx-auto">
+    <nav className="bg-white dark:bg-gray-900 border-b border-b-gray-300 dark:text-white p-4 md:px-8">
+      <div className="">
         <div className="flex justify-between items-center">
           <div className="flex items-center z-1002 logo">
             <Link href="/" className="flex items-center">
@@ -37,7 +37,7 @@ const Navigation = () => {
           {/* Hamburger Icon */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="sm:hidden text-gray-500 dark:text-gray-300 focus:outline-none z-1002 cursor-pointer"
+            className="text-gray-500 dark:text-gray-300  z-1002 cursor-pointer"
           >
             {menuOpen ? ( 
               <svg
@@ -63,7 +63,13 @@ const Navigation = () => {
           </button>
 
           {/* Menu for desktop AND mobile */}
-          <div className={`${menuOpen ? 'flex flex-col justify-center gap-6 text-lg text-center h-full w-full fixed top-0 left-0 z-1001' : 'hidden'} sm:flex sm:flex-row sm:static sm:space-x-2 sm:gap-2 sm:w-auto sm:text-base mt-4 sm:mt-0 bg-white items-center`}>
+          <div className={`
+            fixed top-0 left-0 w-full h-full z-1001 flex flex-col justify-center gap-6 text-lg text-center items-center
+            bg-white dark:bg-gray-900 mt-4 sm:mt-0
+            transition-opacity duration-300
+            ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+            backdrop-blur-sm
+          `}>
             <Link 
               href="/" 
               className="hover:text-gray-800 dark:hover:text-gray-300"

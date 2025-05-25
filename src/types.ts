@@ -5,6 +5,15 @@ export interface Venue {
     provider: string;
     area: string;
     courts: number;
+    floodlitcourts: number;
+    latlng: string;
+    address?: string;
+}
+
+export interface Filter {
+    area?: string;
+    favorite?: boolean;
+    floodlit?: boolean;
 }
 
 export interface Slot {

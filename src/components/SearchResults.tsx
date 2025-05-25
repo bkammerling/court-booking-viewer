@@ -29,7 +29,7 @@ const SearchResults = ({ data, isLoading }: { data: any, isLoading: boolean }) =
     )
   }
 
-  const allSessions = data.flatMap(( venue:any ) => venue.venueSessions);
+  const allSessions = data.sessionData.flatMap(( venue:any ) => venue.venueSessions);
   // Check if allSessions is empty
   if (allSessions.length === 0) {
     return <p>No courts available. Try selecting more courts or a different day.</p>;
@@ -39,38 +39,45 @@ const SearchResults = ({ data, isLoading }: { data: any, isLoading: boolean }) =
   return (
     // Button group to toggle between grid and table view
     <>
-    <div className="flex justify-end mb-4">
-      <button
-        className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l flex items-center ${isGridView ? 'bg-gray-300' : 'cursor-pointer'}`}
-        onClick={() => setIsGridView(true)}
-      >
+    <div className="flex flex-col sm:flex-row justify-between mb-4 items-center">
+
+      <h2 className="h3 text-gray-800 dark:text-gray-200 my-6">
+        Courts available for { new Date(data.formattedDate).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }) }
+      </h2>
+
+      <div className="buttongroup flex">
+        <button
+          className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l flex items-center ${isGridView ? 'bg-gray-300' : 'cursor-pointer'}`}
+          onClick={() => setIsGridView(true)}
+        >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 -960 960 960"
+              className="h-4 w-4 fill-current mr-2 inline"
+            >
+              <path d="M80-560v-320h320v320H80Zm80-80h160v-160H160v160ZM80-80v-320h320v320H80Zm80-80h160v-160H160v160Zm400-400v-320h320v320H560Zm80-80h160v-160H640v160ZM560-80v-320h320v320H560Zm80-80h160v-160H640v160ZM320-640Zm0 320Zm320-320Zm0 320Z" />
+            </svg>
+          Grid View
+        </button>
+        <button 
+          className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r flex items-center ${!isGridView ? 'bg-gray-300' : 'cursor-pointer'}`}
+          onClick={() => setIsGridView(false)}
+        >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 -960 960 960"
-            className="h-4 w-4 fill-current mr-2 inline"
+            className="h-6 w-6 fill-current mr-2 inline"
           >
-            <path d="M80-560v-320h320v320H80Zm80-80h160v-160H160v160ZM80-80v-320h320v320H80Zm80-80h160v-160H160v160Zm400-400v-320h320v320H560Zm80-80h160v-160H640v160ZM560-80v-320h320v320H560Zm80-80h160v-160H640v160ZM320-640Zm0 320Zm320-320Zm0 320Z" />
+            <path d="M360-240h440v-107H360v107ZM160-613h120v-107H160v107Zm0 187h120v-107H160v107Zm0 186h120v-107H160v107Zm200-186h440v-107H360v107Zm0-187h440v-107H360v107ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Z"/>
           </svg>
-        Grid View
-      </button>
-      <button 
-        className={`bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r flex items-center ${!isGridView ? 'bg-gray-300' : 'cursor-pointer'}`}
-        onClick={() => setIsGridView(false)}
-      >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 -960 960 960"
-          className="h-6 w-6 fill-current mr-2 inline"
-        >
-          <path d="M360-240h440v-107H360v107ZM160-613h120v-107H160v107Zm0 187h120v-107H160v107Zm0 186h120v-107H160v107Zm200-186h440v-107H360v107Zm0-187h440v-107H360v107ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Z"/>
-        </svg>
-        Table View
-      </button>
+          Table View
+        </button>
+      </div>
     </div>
     { isGridView ? (
-      <ResultsGrid data={data} />
+      <ResultsGrid data={data.sessionData} />
     ) : (
-      <ResultsTable data={data} />
+      <ResultsTable data={data.sessionData} />
     )}
     </>
   );

@@ -16,7 +16,32 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5 {
+  line-height: 1.2;
+}
+
+h1, .h1, h2, .h2 {
+  font-weight: 600;
+}
+
+h1, .h1 {
+  font-size: calc(1rem * 2);
+}
+h2, .h2 {
+  font-size: calc(1rem * 1.5);
+}
+h3, .h3 {
+  font-size: calc(1rem * 1.25);
+}
+h4, .h4 {
+  font-size: calc(1rem);
+}
+h5, .h5 {
+  font-size: calc(1rem * 0.875);
 }
 
 .py-015 {
@@ -89,15 +114,44 @@ main {
   box-shadow: 0 0 5px rgba(44, 15, 236, 0.5);
 }
 
-.leaflet-container {
+body .leaflet-container {
+  font-family: "Nunito", sans-serif;
   .leaflet-popup {
+    .leaflet-popup-content-wrapper {
+      padding: 0;
+    }
     .leaflet-popup-content {
       margin: 0 !important;
+      width: 250px !important;
     }
     .leaflet-popup-close-button {
       background-color: white;
       border-radius: 50%;
       margin: 5px;
     }
+  }
+  .leaflet-popup-tip-container {
+    display: none;
+  }
+  .leaflet-control-attribution {
+    font-size: .7rem;
+  }
+}
+
+.animate-expand {
+  animation: expand 0.3s ease-in-out forwards;
+}
+@keyframes expand {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(1.15);
   }
 }

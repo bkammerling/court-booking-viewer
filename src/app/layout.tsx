@@ -1,7 +1,9 @@
-import Navigation from "@/components/Navigation";
+import Navigation from "@/components/layout/Navigation";
 import { Nunito } from 'next/font/google'
 import type { Metadata } from 'next'
 import "./globals.css";
+import Footer from "@/components/layout/Footer";
+
 
 export const metadata: Metadata = {
   title: "CourtServer",
@@ -24,10 +26,13 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <Navigation />
-        <main>
-          {children}
-        </main>
+        <div className="page-wrapper">
+          <Navigation />
+          <main>
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

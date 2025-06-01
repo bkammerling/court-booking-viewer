@@ -2,6 +2,7 @@
 import { useState } from "react";
 import CourtList from "@/components/CourtList";
 import dynamic from "next/dynamic";
+import LocationSearch from "@/components/LocationSearch";
 const Map = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function Home() {
@@ -9,6 +10,10 @@ export default function Home() {
 
   return (
     <>
+      <div className="flex absolute top-0 left-0 w-full mx-auto z-1000 py-2">
+        <LocationSearch />
+      </div>
+
       { mapView ? (
           <Map />
        ) : (

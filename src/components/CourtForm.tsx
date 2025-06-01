@@ -1,7 +1,9 @@
 'use client';
 import { useState } from 'react';
+import { useFavorites } from '@/hooks/useFavorites';
 import { Venue, GroupedOption } from '@/types';
 import venuesJson from '@/venues.json';
+import FavoriteIcon from './global/FavoriteIcon';
 
 
 /* 
@@ -62,6 +64,7 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
                         selectedVenues={selectedVenues} 
                         handleAddCourt={handleAddCourt}
                         handleRemoveCourt={handleRemoveCourt}
+                        setSelectedVenues={setSelectedVenues}
                     />
             </div>
 
@@ -127,9 +130,9 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
     )
 }
 
-
-const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, handleRemoveCourt }: any) => {
+const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, handleRemoveCourt, setSelectedVenues }: any) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const favorites = useFavorites().favorites;
 
     return (
         <>
@@ -158,6 +161,43 @@ const CourtSelectorModal = ({ groupedVenues, selectedVenues, handleAddCourt, han
                         <h3 className="font-semibold py-2 mb-2 text-sm col-span-2 text-center border-b border-gray-200">Select Courts</h3>
                         {/* Available Courts List */}
                         <div className="max-h-full overflow-y-auto px-3 col-span-2">
+                            <div className="flex items-cente justify-between gap-3 mb-2 border-b border-gray-200 ">
+                                { favorites.length > 0 && (
+                                    <button
+                                        onClick={() => {
+                                            setSelectedVenues(favorites);
+                                            setIsModalOpen(false);
+                                        }}
+                                        className={`flex gap-2 text-left mb-3 mr-3 text-sm px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border border-gray-300 rounded-lg`}
+                                    >
+                                        
+                                        <svg
+                                            className={`text-gray-500`}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="20px"
+                                            viewBox="0 -960 960 960"
+                                            width="20px"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                        >
+                                            <path d="m480-144-50-45q-100-89-165-152.5t-102.5-113Q125-504 110.5-545T96-629q0-89 61-150t150-61q49 0 95 21t78 59q32-38 78-59t95-21q89 0 150 61t61 150q0 43-14 83t-51.5 89q-37.5 49-103 113.5T528-187l-48 43Zm0-97q93-83 153-141.5t95.5-102Q764-528 778-562t14-67q0-59-40-99t-99-40q-35 0-65.5 14.5T535-713l-35 41h-40l-35-41q-22-26-53.5-40.5T307-768q-59 0-99 40t-40 99q0 33 13 65.5t47.5 75.5q34.5 43 95 102T480-241Zm0-264Z"/>
+                                        </svg>
+                                        Select your favorite courts
+                                    </button>
+                                )}
+
+                                { selectedVenues.length > 0 && (
+                                    <button
+                                        onClick={() => {
+                                            setSelectedVenues([]);
+                                        }}
+                                        className={`flex gap-2 text-left mb-3 mr-3 text-sm px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border border-gray-300 rounded-lg`}
+                                    >
+                                        Clear selection
+                                        <span className='text-xl leading-none font-bold'>&times;</span>
+                                    </button>
+                                )}
+                            </div>
                             
                             {groupedVenues.map((group: any, index: number) => (
                                 <div key={group.label}>

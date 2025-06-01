@@ -39,3 +39,12 @@ export interface GroupedOption {
     readonly label: string;
     readonly options: Option[];
 }
+
+export interface LocationSuggestion {
+    name: string;
+    county: string;
+    city: string;
+    postcode: string;
+    lat: number;
+    lng: number;
+}

@@ -13,6 +13,10 @@
   --foreground: #ededed;
 }
 
+body, html {
+  height: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -53,6 +57,12 @@ h5, .h5 {
   min-height: 120px;
   height: 12vw;
   max-height: 180px;
+}
+
+.page-wrapper {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 /* Leaflet map overrides */

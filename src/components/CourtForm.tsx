@@ -3,12 +3,6 @@ import { useState } from 'react';
 import { useFavorites } from '@/hooks/useFavorites';
 import { Venue, GroupedOption } from '@/types';
 import venuesJson from '@/venues.json';
-import FavoriteIcon from './global/FavoriteIcon';
-
-
-/* 
- * Renders a court selection form from our venues.json file
-*/
 
 const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string[], selectedDate: string) => void, isFetching: boolean }) => {
     // Create a state object to manage venues with their slug and a boolean

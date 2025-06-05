@@ -1,6 +1,5 @@
 'use client';
 import { useState, useRef } from 'react';
-import { LocationSuggestion } from '@/types'; 
 
 const LocationSearch = () => {
   const [query, setQuery] = useState('');

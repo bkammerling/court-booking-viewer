@@ -1,41 +1,156 @@
 'use client';
 import { useState } from "react";
-import CourtList from "@/components/CourtList";
-import dynamic from "next/dynamic";
 import LocationSearch from "@/components/LocationSearch";
-const Map = dynamic(() => import("@/components/Map"), { ssr: false });
+import DateSelector from "@/components/DateSelector";
+import VenueCard from "@/components/VenueCard";
+import { CourtAvailability, Venue } from "@/types";
+import { calculateDistance, parseLatLng } from "@/utils";
+import venuesJson from "@/venues.json";
 
 export default function Home() {
-  const [mapView, setMapView] = useState(true);
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedCoordinates, setSelectedCoordinates] = useState<{ lat: number; lng: number } | null>(null);
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [nearbyVenues, setNearbyVenues] = useState<{ venue: Venue; availability: CourtAvailability }[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+
+  const handleLocationSelect = (location: string, coordinates?: { lat: number; lng: number }) => {
+    setSelectedLocation(location);
+    setSelectedCoordinates(coordinates || null);
+  };
+
+  const handleSearch = async () => {
+    if (!selectedLocation || !selectedCoordinates) {
+      alert('Please select a location first.');
+      return;
+    }
+
+    setIsSearching(true);
+
+    // Calculate distances and get 8 closest venues
+    const venuesWithDistance = venuesJson.map((venue: Venue) => {
+      const venueCoords = parseLatLng(venue.latlng);
+      const distance = calculateDistance(
+        selectedCoordinates.lat,
+        selectedCoordinates.lng,
+        venueCoords.lat,
+        venueCoords.lng
+      );
+      return { ...venue, distance };
+    });
+
+    // Sort by distance and take top 8
+    const closestVenues = venuesWithDistance
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 8);
+
+    // Get availability for these venues
+    const params = new URLSearchParams({
+      slugs: closestVenues.map(venue => venue.slug).join(','),
+      date: selectedDate,
+      provider: 'lta',
+    });
+
+    const response = await fetch(`/api/venues?${params.toString()}`);
+    const availabilityData = await response.json();
+    const closestVenuesWithAvailability = closestVenues.map(venue => {
+      const availability = availabilityData.sessionData?.find((item: any) => item.courtSlug === venue.slug);
+      return { venue, availability };
+    });
+    setNearbyVenues(closestVenuesWithAvailability);
+    setHasSearched(true);
+    setIsSearching(false);
+  };
 
   return (
-    <>
-      <div className="flex absolute top-0 left-0 w-full mx-auto z-1000 py-2">
-        <LocationSearch />
-      </div>
-
-      { mapView ? (
-          <Map />
-       ) : (
-        <div className="py-10 px-4 md:px-8">
-          <CourtList  /> 
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+            Find Your Perfect
+            <span className="text-yellow-500"> Court</span>
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Discover tennis courts near you. Search by location and find the closest available courts.
+          </p>
         </div>
-       )}
 
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-1000">
-        <button
-          onClick={() => setMapView(!mapView)}
-          aria-label="Switch to list view"
-          className="px-5 py-3 bg-gray-100 rounded-full shadow-lg hover:bg-gray-200 cursor-pointer flex items-center gap-2 dark:bg-gray-600 dark:hover:bg-gray-500"
-        >
-          { mapView ? (
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M144-528v-288h288v288H144Zm0 384v-288h288v288H144Zm384-384v-288h288v288H528Zm0 384v-288h288v288H528ZM216-600h144v-144H216v144Zm384 0h144v-144H600v144Zm0 384h144v-144H600v144Zm-384 0h144v-144H216v144Zm384-384Zm0 240Zm-240 0Zm0-240Z"/></svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m600-144-240-72-153 51q-23 8-43-6t-20-40v-498q0-16 9.5-28.5T177-755l183-61 240 72 153-51q23-10 43 5t20 41v498q0 16-9 29t-24 17l-183 61Zm-36-86v-450l-168-50v450l168 50Zm72-2 108-36v-448l-108 36v448Zm-420-12 108-36v-448l-108 36v448Zm420-436v448-448Zm-312-48v448-448Z"/></svg>
-          )}
-          { mapView ? "Card" : "Map"} View
-        </button>
+        {/* Search Form */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 border border-gray-200 dark:border-gray-700">
+          <div className="space-y-6">
+            {/* Location Search */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                Where do you want to play?
+              </label>
+              <LocationSearch 
+                onLocationSelect={handleLocationSelect}
+                placeholder="Search for a location or use current location"
+              />
+            </div>
+
+            {/* Date Selector */}
+            <DateSelector 
+              selectedDate={selectedDate}
+              onDateChange={setSelectedDate}
+              showLabel={true}
+              className=""
+            />
+
+            {/* Search Button */}
+            <button
+              onClick={handleSearch}
+              disabled={isSearching || !selectedLocation}
+              className={`w-full bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-4 rounded-full font-semibold flex items-center justify-center gap-2 text-lg transition ${
+                isSearching || !selectedLocation ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+              }`}
+            >
+              {isSearching ? (
+                <>
+                  <div className="animate-spin h-5 w-5 border-2 border-black border-t-transparent rounded-full"></div>
+                  Searching nearby courts...
+                </>
+              ) : (
+                <>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+                    <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
+                  </svg>
+                  Find Nearby Courts
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Results */}
+        {hasSearched && (
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              {nearbyVenues.length > 0 ? (
+                <>Closest Courts to <span className="text-yellow-500">{selectedLocation}</span></>
+              ) : (
+                'No courts found'
+              )}
+            </h2>
+            
+            {nearbyVenues.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {nearbyVenues.map((venue) => (
+                  <VenueCard key={venue.venue.id} venue={venue.venue} availability={venue.availability} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                <p className="text-gray-600 dark:text-gray-400">
+                  No courts found near this location. Try searching for a different area.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }

@@ -18,7 +18,7 @@ const DateSelector = ({
   return (
     <div className={className}>
       {showLabel && (
-        <label htmlFor="date" className="mr-2 font-semibold">Date</label>
+        <label htmlFor="date" className="mr-2 text-sm font-semibold">When do you want to play?</label>
       )}
       <div className="flex mt-1 border border-gray-300 rounded-full bg-white px-2 justify-around overflow-x-scroll">
         {Array.from({ length: daysToShow }).map((_, index) => {

@@ -8,6 +8,7 @@ export interface Venue {
     floodlitcourts: number;
     latlng: string;
     address?: string;
+    distance?: number;
 }
 
 export interface Filter {

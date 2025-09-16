@@ -6,7 +6,7 @@ import FavoriteIcon from "@/components/global/FavoriteIcon";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import venuesJson from "@/venues.json"; 
-
+import { getVenueBookingUrl } from "@/utils";
 
 const createCourtIcon = (courts: number) => {
   return L.divIcon({
@@ -104,6 +104,13 @@ const Map = () => {
                   <span className="ml-1">{venue.floodlitcourts}</span>
                 </div>
               </div>
+              <a
+                className="px-5 py-2 bg-yellow-500 hover:bg-yellow-400 !text-black cursor-pointer transition rounded-b-lg w-full flex"
+                href={getVenueBookingUrl(venue.slug, venue.provider, new Date().toISOString().split('T')[0])}
+                target="_blank"
+              >
+                Book on LTA
+              </a>
               <div className="absolute top-0 right-8 m-[5px] w-[24px] h-[24px] flex items-center justify-center">
                     <FavoriteIcon slug={venue.slug} />
               </div>

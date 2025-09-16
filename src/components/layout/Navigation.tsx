@@ -71,7 +71,7 @@ const Navigation = () => {
             backdrop-blur-sm
           `}>
             <Link 
-              href="/" 
+              href="/map" 
               className="hover:text-gray-800 dark:hover:text-gray-300"
               onNavigate={() => setMenuOpen(false)}
             >

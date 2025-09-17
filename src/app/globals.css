@@ -53,6 +53,11 @@ h5, .h5 {
   padding-bottom: .38rem;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .court-card-image {
   min-height: 120px;
   height: 12vw;

@@ -49,7 +49,7 @@ const CourtForm = ({ onSearch, isFetching }: { onSearch: (selectedVenues: string
 
 
     return (
-        <div className="searchbar bg-gray-100 dark:bg-gray-800 p-5 rounded shadow my-4 sm:grid sm:grid-cols-3 md:grid-cols-6 gap-5">
+        <div className="searchbar bg-gray-100 dark:bg-gray-800 p-5 rounded shadow my-4 sm:grid md:grid-cols-6 gap-5">
             
             <div className="mb-3 sm:mb-0 md:col-span-2 lg:col-span-3">
                 <label htmlFor="courtselect" className="mr-2 font-semibold">Courts</label>

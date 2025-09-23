@@ -20,11 +20,11 @@ const DateSelector = ({
       {showLabel && (
         <label htmlFor="date" className="mr-2 text-sm font-semibold">When do you want to play?</label>
       )}
-      <div className="flex mt-1 border border-gray-300 rounded-full bg-white px-2 justify-around overflow-x-scroll scrollbar-hide">
+      <div className="flex mt-1 border border-gray-300 dark:border-gray-700 rounded-full bg-white dark:bg-gray-800 px-2 justify-around overflow-x-scroll scrollbar-hide">
         {Array.from({ length: daysToShow }).map((_, index) => {
           const date = new Date();
           date.setDate(date.getDate() + index);
-          const dayName = date.toLocaleDateString('en-US', { weekday: 'short' }).charAt(0); // First letter of the day
+          const dayName = date.toLocaleDateString('en-US', { weekday: 'short' }); // First letter of the day
           const dayNumber = date.getDate();
           const isSelected = selectedDate === date.toISOString().split('T')[0];
           const isLastDay = index === daysToShow - 1;
@@ -36,7 +36,7 @@ const DateSelector = ({
               onClick={() => onDateChange(date.toISOString().split('T')[0])}
               disabled={isDisabled}
               className={`flex flex-col items-center justify-center px-2 py-1 w-[35px] ${
-                isSelected ? 'bg-yellow-500 text-black' : 'dark:bg-gray-700 text-gray-700 dark:text-white'
+                isSelected ? 'bg-yellow-500 text-black' : 'dark:bg-gray-800 text-gray-700 dark:text-white'
               } ${
                 isDisabled ? 'cursor-default opacity-50' : 'cursor-pointer'
               }`}

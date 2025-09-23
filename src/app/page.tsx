@@ -65,9 +65,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="mx-auto px-4 py-8">
         {/* Hero Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 container  max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
             Find Your Perfect
             <span className="text-yellow-500"> Court</span>
@@ -78,7 +78,7 @@ export default function Home() {
         </div>
 
         {/* Search Form */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 border border-gray-200 dark:border-gray-700">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 border border-gray-200 dark:border-gray-700">
           <div className="space-y-6">
             {/* Location Search */}
             <div>
@@ -126,7 +126,7 @@ export default function Home() {
 
         {/* Results */}
         {hasSearched && (
-          <div>
+          <div className="md:px-2 lg:px-10 xl:px-12">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
               {nearbyVenues.length > 0 ? (
                 <>Closest Courts to <span className="text-yellow-500">{selectedLocation}</span></>
@@ -136,7 +136,7 @@ export default function Home() {
             </h2>
             
             {nearbyVenues.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
                 {nearbyVenues.map((venue) => (
                   <VenueCard key={venue.venue.id} venue={venue.venue} availability={venue.availability} />
                 ))}

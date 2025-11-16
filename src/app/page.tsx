@@ -18,6 +18,7 @@ export default function Home() {
   const handleLocationSelect = (location: string, coordinates?: { lat: number; lng: number }) => {
     setSelectedLocation(location);
     setSelectedCoordinates(coordinates || null);
+    setHasSearched(false);
   };
 
   const handleSearch = async () => {

@@ -69,8 +69,8 @@ const getAvailableSessions = (resourceData: any, formattedDate: string) => {
   const allCourtsAvailability: CourtAvailability[] = [];
 
   resourceData.Resources.forEach((court: any) => {
-    // Only consider courts that are standard size
-    if (court.Size !== 0) return;
+    // Only consider courts that are standard size && tennis category
+    if (court.Size !== 0 || court.Category !== 1) return;
     // For this court, collect its available sessions
     const courtAvailable = court.Days.flatMap((day: any) => 
       day.Sessions.filter((session: any) => session.Capacity >= 1 && session.StartTime >= currentTimeInMinutes)

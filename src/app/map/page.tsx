@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import LocationSearch from "@/components/LocationSearch";
 const Map = dynamic(() => import("@/components/Map"), { ssr: false });
 
-export default function Home() {
+const MapPage = () => {
   const [mapView, setMapView] = useState(true);
 
   return (
@@ -39,3 +39,5 @@ export default function Home() {
     </>
   );
 }
+
+export default MapPage;

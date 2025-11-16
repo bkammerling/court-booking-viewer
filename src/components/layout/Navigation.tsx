@@ -1,6 +1,4 @@
 'use client';
-
-import { on } from "events";
 import Link from "next/link"
 import { useEffect, useState } from "react";
 

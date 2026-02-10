@@ -21,7 +21,7 @@ export default function Home() {
     setHasSearched(false);
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (firstSearch: boolean) => {
     if (!selectedLocation || !selectedCoordinates) {
       alert('Please select a location first.');
       return;
@@ -41,10 +41,12 @@ export default function Home() {
       return { ...venue, distance };
     });
 
+    const sliceFrom = firstSearch ? 0 : nearbyVenues.length;
+
     // Sort by distance and take top 8
     const closestVenues = venuesWithDistance
       .sort((a, b) => a.distance - b.distance)
-      .slice(0, 8);
+      .slice(sliceFrom, sliceFrom + 8);
 
     // Get availability for these venues
     const params = new URLSearchParams({
@@ -59,7 +61,7 @@ export default function Home() {
       const availability = availabilityData.sessionData?.find((item: any) => item.courtSlug === venue.slug);
       return { venue, availability };
     });
-    setNearbyVenues(closestVenuesWithAvailability);
+    setNearbyVenues(prev => [...prev, ...closestVenuesWithAvailability]);
     setHasSearched(true);
     setIsSearching(false);
   };
@@ -102,7 +104,7 @@ export default function Home() {
 
             {/* Search Button */}
             <button
-              onClick={handleSearch}
+              onClick={() => handleSearch(true)}
               disabled={isSearching || !selectedLocation}
               className={`w-full bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-4 rounded-full font-semibold flex items-center justify-center gap-2 text-lg transition ${
                 isSearching || !selectedLocation ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
@@ -137,11 +139,18 @@ export default function Home() {
             </h2>
             
             {nearbyVenues.length > 0 ? (
+              <>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
                 {nearbyVenues.map((venue) => (
                   <VenueCard key={venue.venue.id} venue={venue.venue} availability={venue.availability} />
                 ))}
               </div>
+              <button 
+                className="mt-8 py-4 px-6 rounded-lg border border-yellow-500 dark:border-yellow-300 text-black dark:text-gray-200 hover:bg-yellow-400 dark:hover:bg-yellow-500 dark:hover:text-black cursor-pointer transition mx-auto block"
+                onClick={() => handleSearch(false)}>
+                View More Courts
+              </button>
+              </>
             ) : (
               <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                 <p className="text-gray-600 dark:text-gray-400">

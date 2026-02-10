@@ -11,7 +11,7 @@ const VenueCard = ({ venue, availability }: { venue: Venue, availability?: Court
       <img 
         src={`/courts/${venue.slug}.jpg`} 
         alt={venue.name} 
-        className="object-cover rounded-t-lg row-span-1 w-full court-card-image" 
+        className={`object-cover rounded-t-lg row-span-1 w-full court-card-image ${availability?.availableSlots.length === 0 ? 'grayscale' : ''}`} 
         onError={(e) => (e.currentTarget.src = fallbackImage)}
       />
       <div className="flex flex-col flex-grow justify-between">
@@ -47,7 +47,7 @@ const VenueCard = ({ venue, availability }: { venue: Venue, availability?: Court
 
         </div>
         <a
-          className="px-5 py-2 bg-yellow-500 hover:bg-yellow-400 text-black cursor-pointer transition rounded-b-lg w-full"
+          className={`px-5 py-2 ${availability.availableSlots.length > 0 ? 'bg-yellow-500 hover:bg-yellow-400 cursor-pointer' : 'bg-gray-400 cursor-not-allowed'} text-black  transition rounded-b-lg w-full`}
           href={ availability?.bookingUrl ? availability.bookingUrl : bookingUrl }
           target="_blank"
         >

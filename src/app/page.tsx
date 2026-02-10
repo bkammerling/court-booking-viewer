@@ -75,7 +75,7 @@ export default function Home() {
             Find Your Perfect
             <span className="text-yellow-500"> Court</span>
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-balance">
             Discover tennis courts near you. Search by location and find the closest available courts.
           </p>
         </div>

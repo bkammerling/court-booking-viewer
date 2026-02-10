@@ -145,11 +145,13 @@ export default function Home() {
                   <VenueCard key={venue.venue.id} venue={venue.venue} availability={venue.availability} />
                 ))}
               </div>
-              <button 
-                className="mt-8 py-4 px-6 rounded-lg border border-yellow-500 dark:border-yellow-300 text-black dark:text-gray-200 hover:bg-yellow-400 dark:hover:bg-yellow-500 dark:hover:text-black cursor-pointer transition mx-auto block"
-                onClick={() => handleSearch(false)}>
-                View More Courts
-              </button>
+              { venuesJson.length > nearbyVenues.length + 8 && (
+                <button 
+                  className="mt-8 py-4 px-6 rounded-lg border border-yellow-500 dark:border-yellow-300 text-black dark:text-gray-200 hover:bg-yellow-400 dark:hover:bg-yellow-500 dark:hover:text-black cursor-pointer transition mx-auto block"
+                  onClick={() => handleSearch(false)}>
+                  View More Courts
+                </button>
+              )}
               </>
             ) : (
               <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
